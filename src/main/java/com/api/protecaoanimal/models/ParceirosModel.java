@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -10,9 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "anuncios")
-public class Anuncios {
-
+@Table(name = "parceiros")
+public class ParceirosModel {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -20,5 +21,7 @@ public class Anuncios {
     @Column(nullable = false, length = 50)
     private String imagem;
 
-    
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
+
 }

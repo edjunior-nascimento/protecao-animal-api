@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -11,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "adocao")
-public class Adocao {
+public class AdocaoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,5 +56,8 @@ public class Adocao {
     
     @Column(length = 15)
     private String cep;
+
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
     
 }

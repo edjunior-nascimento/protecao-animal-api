@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -11,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "animal")
-public class Animal {
+public class AnimalModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,5 +47,8 @@ public class Animal {
     
     @Column(length = 255)
     private String fotos;
+
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
     
 }
