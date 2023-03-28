@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,14 +13,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "castracao")
-public class CastracaoModel {
+public class CastracaoModel implements Serializable{
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     
     @Column(length = 36)
-    private String idAnimal;
+    private UUID idAnimal;
 
     @Column(length = 45)
     private String nome;

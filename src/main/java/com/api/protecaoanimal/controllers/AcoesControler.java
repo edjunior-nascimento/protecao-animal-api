@@ -2,6 +2,8 @@ package com.api.protecaoanimal.controllers;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.protecaoanimal.dtos.AcoesDto;
 import com.api.protecaoanimal.models.AcoesModel;
-import com.api.protecaoanimal.models.AnimalModel;
 import com.api.protecaoanimal.services.AcoesService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
 @RestController
@@ -39,15 +39,6 @@ public class AcoesControler {
     @PostMapping
     @Operation(summary = "Criar uma nova ação", description = "Criar uma nova ação" )
     public ResponseEntity<Object> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
-        //if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
-        //    return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: License Plate Car is already in use!");
-        //}
-        //if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
-        //    return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
-        //}
-        //if(parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())){
-        //    return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
-        //}
         var acoesModel = new AcoesModel();
         BeanUtils.copyProperties(acoesDto, acoesModel);
         acoesModel.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
@@ -57,25 +48,37 @@ public class AcoesControler {
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
     public ResponseEntity<Object> getListAcoes(){
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(acoesService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir ação por ID", description = "Exibir uma determinada Ação pelo seu ID")
-    public ResponseEntity<Object> getAcoes(@PathVariable String id){
-        return null;
+    public ResponseEntity<Object> getAcoes(@PathVariable UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(acoesService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updateAcoes(@PathVariable("id") String id, @RequestBody @Valid AcoesDto acoesDto){
-        return null;
+    public ResponseEntity<Object> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
+        Optional<AcoesModel> acoesModelOptional = acoesService.findById(id);
+        if (!acoesModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
+        }
+        var acoesModel = new AcoesModel();
+        BeanUtils.copyProperties(acoesDto, acoesModel);
+        acoesModel.setId(acoesModelOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesModel));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
-    public ResponseEntity<Object> deleteAcoes(@PathVariable("id") String id){
-        return null;
+    public ResponseEntity<Object> deleteAcoes(@PathVariable("id") UUID id){
+        Optional<AcoesModel> acoesModelOptional = acoesService.findById(id);
+        if (!acoesModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
+        }
+        acoesService.delete(acoesModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 
 }

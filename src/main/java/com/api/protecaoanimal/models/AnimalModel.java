@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -12,7 +13,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "animal")
-public class AnimalModel {
+public class AnimalModel implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,9 +46,6 @@ public class AnimalModel {
     
     @Column()
     private String historia;
-    
-    @Column(length = 255)
-    private String fotos;
 
     @Column(nullable = false)
     private LocalDateTime dataCriacao;

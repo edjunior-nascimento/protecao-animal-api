@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,13 +19,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "acoes")
-public class AcoesModel {
+public class AcoesModel implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 255)
     private String imagem;
 
     @Column(nullable = false)
