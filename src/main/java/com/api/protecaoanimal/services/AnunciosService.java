@@ -1,11 +1,15 @@
 package com.api.protecaoanimal.services;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.api.protecaoanimal.dtos.AnunciosDto;
 import com.api.protecaoanimal.models.AnunciosModel;
 import com.api.protecaoanimal.repositories.AnunciosRepository;
 
@@ -21,7 +25,10 @@ public class AnunciosService {
     }
 
     @Transactional
-    public AnunciosModel save(AnunciosModel anunciosModel) {
+    public AnunciosModel save(AnunciosDto anunciosDto) {
+        var anunciosModel = new AnunciosModel();
+        BeanUtils.copyProperties(anunciosDto, anunciosModel);
+        anunciosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
         return anunciosRepository.save(anunciosModel);
     }
 

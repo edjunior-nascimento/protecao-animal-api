@@ -23,10 +23,12 @@ import com.api.protecaoanimal.models.ParceirosModel;
 import com.api.protecaoanimal.services.ParceirosService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Parceiros")
 @RequestMapping("/parceiros")
 public class ParceirosControler {
 
@@ -37,12 +39,9 @@ public class ParceirosControler {
     }
 
     @PostMapping
-    @Operation(summary = "Criar uma nova parceiro", description = "Criar uma nova parceiro" )
+    @Operation(summary = "Cadastrar uma nova parceiro", description = "Cadastrar uma nova parceiro" )
     public ResponseEntity<Object> saveParceiros(@RequestBody @Valid ParceirosDto parceirosDto){
-        var parceirosModel = new ParceirosModel();
-        BeanUtils.copyProperties(parceirosDto, parceirosModel);
-        parceirosModel.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
     }
 
     @GetMapping
@@ -64,10 +63,7 @@ public class ParceirosControler {
         if (!parceirosModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
         }
-        var parceirosModel = new ParceirosModel();
-        BeanUtils.copyProperties(parceirosDto, parceirosModel);
-        parceirosModel.setId(parceirosModelOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
     }
 
     @DeleteMapping("/{id}")

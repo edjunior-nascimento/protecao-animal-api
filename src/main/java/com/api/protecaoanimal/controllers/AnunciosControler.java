@@ -23,10 +23,12 @@ import com.api.protecaoanimal.models.AnunciosModel;
 import com.api.protecaoanimal.services.AnunciosService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Anúncios")
 @RequestMapping("/anuncios")
 public class AnunciosControler {
 
@@ -37,12 +39,9 @@ public class AnunciosControler {
     }
 
     @PostMapping
-    @Operation(summary = "Criar uma nova parceiro", description = "Criar uma nova parceiro" )
+    @Operation(summary = "Cadastrar um novo anuncio", description = "Cadastrar um novo anuncio" )
     public ResponseEntity<Object> saveanuncios(@RequestBody @Valid AnunciosDto anunciosDto){
-        var anunciosModel = new AnunciosModel();
-        BeanUtils.copyProperties(anunciosDto, anunciosModel);
-        anunciosModel.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
     }
 
     @GetMapping
@@ -52,26 +51,23 @@ public class AnunciosControler {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Exibir parceiro por ID", description = "Exibir uma determinada parceiro pelo seu ID")
+    @Operation(summary = "Exibir anuncio por ID", description = "Exibir uma determinado anuncio pelo seu ID")
     public ResponseEntity<Object> getanuncios(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(anunciosService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar parceiro", description = "Atualiza uma determinada parceiro passando o seu ID e as configurações que deseja")
+    @Operation(summary = "Atualizar anuncio", description = "Atualiza um determinado anuncio passando o seu ID e as configurações que deseja")
     public ResponseEntity<Object> updateanuncios(@PathVariable("id") UUID id, @RequestBody @Valid AnunciosDto anunciosDto){
         Optional<AnunciosModel> anunciosModelOptional = anunciosService.findById(id);
         if (!anunciosModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
         }
-        var anunciosModel = new AnunciosModel();
-        BeanUtils.copyProperties(anunciosDto, anunciosModel);
-        anunciosModel.setId(anunciosModelOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta uma parceiro", description = "Deleta uma determinada parceiro passando o seu ID")
+    @Operation(summary = "Deleta uma anuncio", description = "Deleta uma determinada anuncio passando o seu ID")
     public ResponseEntity<Object> deleteanuncios(@PathVariable("id") UUID id){
         Optional<AnunciosModel> anunciosModelOptional = anunciosService.findById(id);
         if (!anunciosModelOptional.isPresent()) {

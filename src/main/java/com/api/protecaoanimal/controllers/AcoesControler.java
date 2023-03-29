@@ -23,10 +23,12 @@ import com.api.protecaoanimal.models.AcoesModel;
 import com.api.protecaoanimal.services.AcoesService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@Tag(name = "Ações")
 @RequestMapping("/acoes")
 public class AcoesControler {
 
@@ -37,12 +39,9 @@ public class AcoesControler {
     }
 
     @PostMapping
-    @Operation(summary = "Criar uma nova ação", description = "Criar uma nova ação" )
+    @Operation(summary = "Cadastrar uma nova ação", description = "Cadastrar uma nova ação" )
     public ResponseEntity<Object> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
-        var acoesModel = new AcoesModel();
-        BeanUtils.copyProperties(acoesDto, acoesModel);
-        acoesModel.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
     @GetMapping
@@ -64,10 +63,7 @@ public class AcoesControler {
         if (!acoesModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
         }
-        var acoesModel = new AcoesModel();
-        BeanUtils.copyProperties(acoesDto, acoesModel);
-        acoesModel.setId(acoesModelOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
     @DeleteMapping("/{id}")
