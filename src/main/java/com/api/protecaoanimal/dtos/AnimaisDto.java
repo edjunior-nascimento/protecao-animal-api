@@ -1,9 +1,7 @@
 package com.api.protecaoanimal.dtos;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -38,11 +36,11 @@ public class AnimaisDto {
     @Size(max = 50, message = "Campo raça não pode ser mais que 50 caracter")
     private String raca;
     
-    @Schema(description = "Lista de inteiros, podendo ser: 1-ativo, 2-dócio, 3-Apatico, 4-Calmo e 5-hiperativo")
-    private List<Integer> temperamento;
+    @Schema(description = "Array de inteiros, podendo ser: 1-ativo, 2-dócio, 3-Apatico, 4-Calmo e 5-hiperativo")
+    private Integer[] temperamento;
     
-    @Schema(description = "Lista de inteiros, podendo ser: 1-castrado, 2-vermifugado e 3-vacinado")
-    private List<Integer> situacao;
+    @Schema(description = "Array de inteiros, podendo ser: 1-castrado, 2-vermifugado e 3-vacinado")
+    private Integer[] situacao;
     
     private String historia;
 

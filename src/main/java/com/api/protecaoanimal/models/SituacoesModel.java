@@ -13,8 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "animais")
-public class AnimaisModel implements Serializable{
+@Table(name = "situacoes")
+public class SituacoesModel implements Serializable{
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -34,37 +35,21 @@ public class AnimaisModel implements Serializable{
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
-    @Column(length = 50)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "animais_situacoes", 
+        joinColumns = { @JoinColumn(name = "idSituacao") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idAnimal") }
+    )
+    private List<AnimaisModel> animais;
+
+    @Column(nullable = false, length = 50)
     private String nome;
 
-    @Column(length = 1)
-    private int especie;
-
-    @Column(length = 1)
-    private int sexo;
-    
-    @Column(length = 2)
-    private int idade;
-    
-    @Column(length = 1)
-    private int porte;
-    
-    @Column(length = 50)
-    private String raca;
-    
-    @Column()
-    private String historia;
+    @Column(length = 255)
+    private String descricao;
 
     @Column(nullable = false)
     private LocalDateTime registro;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "animais")
-    private List<TemperamentosModel> temperamentos;
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "animais")
-    private List<SituacoesModel> situacoes;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "animais")
-    private List<FotosModel> fotos;
-    
 }
