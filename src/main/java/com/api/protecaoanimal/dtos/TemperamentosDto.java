@@ -15,7 +15,6 @@ public class TemperamentosDto {
     @Size(max = 50 ,message = "Campo nome não pode ser maior que 50 caracteres")
     private String nome;
 
-    @NotBlank
     @Size(max = 255 ,message = "Campo descricao não pode ser maior que 255 caracteres")
     private String descricao;
     

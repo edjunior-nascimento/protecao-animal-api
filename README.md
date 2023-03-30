@@ -1,5 +1,17 @@
 # protecao-animal
 
-#API access
-http://localhost:8080/swagger-ui/index.html
-http://localhost:8080/swagger-ui/v3/api-docs
+Site criado para ONG de Proteção de Animais, com o intuito de melhorar a experiencia do usuario, gerenciando doações, adoções, catrações e venda de rifas
+
+# Tecnologias utilizadas
+-----------
+- Java 17
+- Spring Framework 3
+- Mysql 8.0.32
+
+# Modelagem
+
+![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem.png)
+
+# API access
+- http://localhost:8080/swagger-ui/index.html
+- http://localhost:8080/swagger-ui/v3/api-docs

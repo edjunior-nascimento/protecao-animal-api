@@ -1,12 +1,8 @@
 package com.api.protecaoanimal.controllers;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.protecaoanimal.dtos.AnimaisDto;
-import com.api.protecaoanimal.dtos.FotosDto;
 import com.api.protecaoanimal.models.AnimaisModel;
-import com.api.protecaoanimal.models.FotosModel;
 import com.api.protecaoanimal.services.AnimaisService;
-import com.api.protecaoanimal.services.FotosService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

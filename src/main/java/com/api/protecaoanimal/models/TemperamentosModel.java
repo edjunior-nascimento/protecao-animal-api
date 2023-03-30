@@ -52,5 +52,4 @@ public class TemperamentosModel implements Serializable{
     @Column(nullable = false)
     private LocalDateTime registro;
 
-
 }
