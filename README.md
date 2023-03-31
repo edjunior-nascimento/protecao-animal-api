@@ -10,7 +10,7 @@ Site criado para ONG de Proteção de Animais, com o intuito de melhorar a exper
 
 # Modelagem
 
-![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem.png)
+![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem2.png)
 
 # Projeto no Figma
 
