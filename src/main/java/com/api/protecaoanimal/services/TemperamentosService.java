@@ -2,6 +2,7 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.api.protecaoanimal.dtos.TemperamentosDto;
+import com.api.protecaoanimal.models.AnimaisModel;
 import com.api.protecaoanimal.models.TemperamentosModel;
 import com.api.protecaoanimal.repositories.TemperamentosRepository;
 
