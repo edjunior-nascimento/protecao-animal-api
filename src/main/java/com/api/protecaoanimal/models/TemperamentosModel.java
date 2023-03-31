@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,6 +43,7 @@ public class TemperamentosModel implements Serializable{
         joinColumns = { @JoinColumn(name = "idTemperamento") }, 
         inverseJoinColumns = { @JoinColumn(name = "idAnimal") }
     )
+    @JsonIgnore
     private List<AnimaisModel> animais;
 
     @Column(nullable = false)

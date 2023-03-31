@@ -12,6 +12,11 @@ Site criado para ONG de Proteção de Animais, com o intuito de melhorar a exper
 
 ![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem.png)
 
+# Projeto no Figma
+
+https://www.figma.com/file/xWfCGj3Y1obGwbw9LTfTMX/website_ong?node-id=0-1&t=OXSbPPRDFA111WiY-0
+
+
 # API access
 - http://localhost:8080/swagger-ui/index.html
 - http://localhost:8080/swagger-ui/v3/api-docs
