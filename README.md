@@ -12,7 +12,7 @@ Tecnologias utilizadas
 Modelagem das Tabelas
 -----------
 
-![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem2.png)
+![alt text](https://github.com/souedjunior/protecao-animal/blob/master/modelagem3.png)
 
 Projeto no Figma
 -----------
