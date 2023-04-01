@@ -2,6 +2,7 @@ package com.api.protecaoanimal.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +14,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,7 +48,7 @@ public class AnimaisModel implements Serializable{
     private int sexo;
     
     @Column(length = 2)
-    private int idade;
+    private Date nascimento;
     
     @Column(length = 1)
     private int porte;
@@ -52,8 +56,11 @@ public class AnimaisModel implements Serializable{
     @Column(length = 50)
     private String raca;
     
-    @Column()
+    @Column
     private String historia;
+
+    @Column
+    private String observacao;
 
     @Column(nullable = false)
     private LocalDateTime registro;
@@ -66,5 +73,15 @@ public class AnimaisModel implements Serializable{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "animais")
     private List<FotosModel> fotos;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "animais")
+    private CastracoesModel castracao;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "animais")
+    private AdocoesModel adocao;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idTutor")
+    private TutoresModel tutores;
     
 }

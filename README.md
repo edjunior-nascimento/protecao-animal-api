@@ -1,6 +1,6 @@
 # Projeto Proteção Animal
 
-Site criado para ONGs de Proteção de Animal, contruida com o intuito de melhorar a experiência do usuário na hora de realizar doações, além de auxiliar os organizadores no gerenciamento de adoções, castrações e realizando vendas de rifas online.
+Site, com dashboard completo criado para ONGs de Proteção de Animal, contruido com o intuito de melhorar a experiência do usuário na hora de realizar doações, além de auxiliar os organizadores no gerenciamento de adoções, castrações e realizando vendas de rifas online.
 
 Tecnologias utilizadas
 -----------
@@ -24,8 +24,8 @@ https://www.figma.com/file/xWfCGj3Y1obGwbw9LTfTMX/website_ong?node-id=0-1&t=OXSb
 Acessar APIs no Swagger localmente
 -----------
 ```
-- http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/swagger-ui/index.html
 ```
 ```
-- http://localhost:8080/swagger-ui/v3/api-docs
+http://localhost:8080/swagger-ui/v3/api-docs
 ```

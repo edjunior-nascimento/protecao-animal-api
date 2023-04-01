@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.dtos;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,9 +27,7 @@ public class AnimaisDto {
     @Schema(description = "1-Macho, 2-Fêmea e 3-Indefinido")
     private int sexo;
     
-    @Max(value = 2, message = "Campo idade não pode ser mais que 2 caracteres")
-    @Schema(description = "idade em meses: 1-1mês, 2-2meses, 3-3meses ...")
-    private int idade;
+    private Date nascimento;
     
     @Max(value = 1, message = "Campo porte não pode ser mais que 1 caracter")
     @Schema(description = "1-pequeno, 2-médio e 3-grande")
@@ -36,15 +35,17 @@ public class AnimaisDto {
     
     @Size(max = 50, message = "Campo raça não pode ser mais que 50 caracter")
     private String raca;
+      
+    private String historia;
+
+    private String observacao;
     
-    @Schema(description = "Ex: ativo, dócio, Apatico, Calmo e hiperativo")
+    @Schema(description = "Ex: Ativo, Dócio, Apatico, Calmo e Hiperativo")
     private List<UUID>  temperamento;
     
     @Schema(description = "Ex: castrado, vermifugado e vacinado")
     private List<UUID> situacao;
-    
-    private String historia;
-
+  
     private List<FotosDto> fotos;
 
 }
