@@ -58,10 +58,12 @@ public class AnimaisService {
 
         var savedAnimaisModel = animaisRepository.save(animaisModel);
 
-        var savedFotosModal = fotosService.save(savedAnimaisModel, animaisDto.getFotos());
-        
-        savedAnimaisModel.setFotos(savedFotosModal);
+        if(!animaisDto.getFotos().isEmpty()){
+            var savedFotosModal = fotosService.save(savedAnimaisModel, animaisDto.getFotos());
+            savedAnimaisModel.setFotos(savedFotosModal);
 
+        }
+       
         return savedAnimaisModel;
     }
 
