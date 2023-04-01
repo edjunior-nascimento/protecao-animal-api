@@ -2,6 +2,7 @@ package com.api.protecaoanimal.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -40,6 +41,9 @@ public class CastracoesModel implements Serializable{
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="idAnimal")
     private AnimaisModel animais;
+    
+    @Column
+    private Date agendamento;
 
     @Column(nullable = false)
     private LocalDateTime registro;

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(name = "temperamento")
+@Schema(name = "temperamentos")
 public class TemperamentosDto {
 
     @NotBlank
