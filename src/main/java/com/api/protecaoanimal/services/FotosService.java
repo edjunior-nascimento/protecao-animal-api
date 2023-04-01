@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -48,8 +47,8 @@ public class FotosService {
         return fotosRepository.findAll();
     }
 
-    public Optional<FotosModel> findById(UUID id) {
-        return fotosRepository.findById(id);
+    public FotosModel findById(UUID id) {
+        return fotosRepository.findById(id).get();
     }
 
     public void delete(FotosModel fotosModel) {

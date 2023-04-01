@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,41 +37,33 @@ public class AnunciosControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar um novo anuncio", description = "Cadastrar um novo anuncio" )
-    public ResponseEntity<Object> saveanuncios(@RequestBody @Valid AnunciosDto anunciosDto){
+    public ResponseEntity<AnunciosModel> saveanuncios(@RequestBody @Valid AnunciosDto anunciosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os anuncios", description = "Listar todos os anuncios")
-    public ResponseEntity<Object> getListanuncios(){
+    public ResponseEntity<List<AnunciosModel>> getListanuncios(){
         return ResponseEntity.status(HttpStatus.OK).body(anunciosService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir anuncio por ID", description = "Exibir uma determinado anuncio pelo seu ID")
-    public ResponseEntity<Object> getanuncios(@PathVariable UUID id){
+    public ResponseEntity<AnunciosModel> getanuncios(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(anunciosService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar anuncio", description = "Atualiza um determinado anuncio passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updateanuncios(@PathVariable("id") UUID id, @RequestBody @Valid AnunciosDto anunciosDto){
-        Optional<AnunciosModel> anunciosModelOptional = anunciosService.findById(id);
-        if (!anunciosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<AnunciosModel> updateanuncios(@PathVariable("id") UUID id, @RequestBody @Valid AnunciosDto anunciosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma anuncio", description = "Deleta uma determinada anuncio passando o seu ID")
-    public ResponseEntity<Object> deleteanuncios(@PathVariable("id") UUID id){
-        Optional<AnunciosModel> anunciosModelOptional = anunciosService.findById(id);
-        if (!anunciosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        anunciosService.delete(anunciosModelOptional.get());
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+    public ResponseEntity<String> deleteanuncios(@PathVariable("id") UUID id){
+        anunciosService.delete(anunciosService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo. ");
     }
 
 }

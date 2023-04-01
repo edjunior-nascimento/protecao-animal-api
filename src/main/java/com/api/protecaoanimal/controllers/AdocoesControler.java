@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class AdocoesControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar uma nova adoção", description = "Cadastrar uma nova adoção" )
-    public ResponseEntity<Object> saveadocoes(@RequestBody @Valid AdocoesDto adocoesDto){
+    public ResponseEntity<AdocoesModel> saveadocoes(@RequestBody @Valid AdocoesDto adocoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(adocoesService.save(adocoesDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
-    public ResponseEntity<Object> getListadocoes(){
+    public ResponseEntity<List<AdocoesModel>> getListadocoes(){
         return ResponseEntity.status(HttpStatus.OK).body(adocoesService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir adoção por ID", description = "Exibir uma determinada adoção pelo seu ID")
-    public ResponseEntity<Object> getadocoes(@PathVariable UUID id){
+    public ResponseEntity<AdocoesModel> getadocoes(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(adocoesService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar adoção", description = "Atualiza uma determinada adoção passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updateadocoes(@PathVariable("id") UUID id, @RequestBody @Valid AdocoesDto adocoesDto){
-        Optional<AdocoesModel> adocoesModelOptional = adocoesService.findById(id);
-        if (!adocoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<AdocoesModel> updateadocoes(@PathVariable("id") UUID id, @RequestBody @Valid AdocoesDto adocoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(adocoesService.save(adocoesDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma adoção", description = "Deleta uma determinada adoção passando o seu ID")
-    public ResponseEntity<Object> deleteadocoes(@PathVariable("id") UUID id){
-        Optional<AdocoesModel> adocoesModelOptional = adocoesService.findById(id);
-        if (!adocoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        adocoesService.delete(adocoesModelOptional.get());
+    public ResponseEntity<String> deleteadocoes(@PathVariable("id") UUID id){
+        adocoesService.delete(adocoesService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

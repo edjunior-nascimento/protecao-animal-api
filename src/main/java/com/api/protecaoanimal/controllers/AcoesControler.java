@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class AcoesControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar uma nova ação", description = "Cadastrar uma nova ação" )
-    public ResponseEntity<Object> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
+    public ResponseEntity<AcoesModel> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
-    public ResponseEntity<Object> getListAcoes(){
+    public ResponseEntity<List<AcoesModel>> getListAcoes(){
         return ResponseEntity.status(HttpStatus.OK).body(acoesService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir ação por ID", description = "Exibir uma determinada Ação pelo seu ID")
-    public ResponseEntity<Object> getAcoes(@PathVariable UUID id){
+    public ResponseEntity<AcoesModel> getAcoes(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(acoesService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
-        Optional<AcoesModel> acoesModelOptional = acoesService.findById(id);
-        if (!acoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<AcoesModel> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
-    public ResponseEntity<Object> deleteAcoes(@PathVariable("id") UUID id){
-        Optional<AcoesModel> acoesModelOptional = acoesService.findById(id);
-        if (!acoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        acoesService.delete(acoesModelOptional.get());
+    public ResponseEntity<String> deleteAcoes(@PathVariable("id") UUID id){
+        acoesService.delete(acoesService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class AnimaisControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar um novo animal", description = "Cadastrar um novo animal" )
-    public ResponseEntity<Object> saveanimais(@RequestBody @Valid AnimaisDto animaisDto){
+    public ResponseEntity<AnimaisModel> saveanimais(@RequestBody @Valid AnimaisDto animaisDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(animaisService.save(animaisDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os animais", description = "Listar todos os animais")
-    public ResponseEntity<Object> getListanimais(){
+    public ResponseEntity<List<AnimaisModel>> getListanimais(){
         return ResponseEntity.status(HttpStatus.OK).body(animaisService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir animal por ID", description = "Exibir uma determinado animal pelo seu ID")
-    public ResponseEntity<Object> getanimais(@PathVariable UUID id){
+    public ResponseEntity<AnimaisModel> getanimais(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(animaisService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar dados de animal", description = "Atualizar dados de animal")
-    public ResponseEntity<Object> updateanimais(@PathVariable("id") UUID id, @RequestBody @Valid AnimaisDto animaisDto){
-        Optional<AnimaisModel> animaisModelOptional = animaisService.findById(id);
-        if (!animaisModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<AnimaisModel> updateanimais(@PathVariable("id") UUID id, @RequestBody @Valid AnimaisDto animaisDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(animaisService.save(animaisDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma animal pelo ID", description = "Deleta uma determinado animal passando o seu ID")
-    public ResponseEntity<Object> deleteanimais(@PathVariable("id") UUID id){
-        Optional<AnimaisModel> animaisModelOptional = animaisService.findById(id);
-        if (!animaisModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        animaisService.delete(animaisModelOptional.get());
+    public ResponseEntity<String> deleteanimais(@PathVariable("id") UUID id){
+        animaisService.delete(animaisService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

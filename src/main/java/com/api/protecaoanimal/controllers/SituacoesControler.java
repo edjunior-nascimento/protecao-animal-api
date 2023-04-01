@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class SituacoesControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar uma nova situação para animais", description = "Cadastrar uma nova situação para animais" )
-    public ResponseEntity<Object> savesituacoes(@RequestBody @Valid SituacoesDto situacoesDto){
+    public ResponseEntity<SituacoesModel> savesituacoes(@RequestBody @Valid SituacoesDto situacoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.save(situacoesDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todas as situações para animais", description = "Listar todas as situacões para animais")
-    public ResponseEntity<Object> getListsituacoes(){
+    public ResponseEntity<List<SituacoesModel>> getListsituacoes(){
         return ResponseEntity.status(HttpStatus.OK).body(situacoesService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir situações por ID", description = "Exibir uma determinado situações pelo seu ID")
-    public ResponseEntity<Object> getsituacoes(@PathVariable UUID id){
+    public ResponseEntity<SituacoesModel> getsituacoes(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(situacoesService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar situações", description = "Atualiza um determinado situação passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updatesituacoes(@PathVariable("id") UUID id, @RequestBody @Valid SituacoesDto situacoesDto){
-        Optional<SituacoesModel> situacoesModelOptional = situacoesService.findById(id);
-        if (!situacoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<SituacoesModel> updatesituacoes(@PathVariable("id") UUID id, @RequestBody @Valid SituacoesDto situacoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.save(situacoesDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um situação", description = "Deleta uma determinado situação passando o seu ID")
-    public ResponseEntity<Object> deletesituacoes(@PathVariable("id") UUID id){
-        Optional<SituacoesModel> situacoesModelOptional = situacoesService.findById(id);
-        if (!situacoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        situacoesService.delete(situacoesModelOptional.get());
+    public ResponseEntity<String> deletesituacoes(@PathVariable("id") UUID id){
+        situacoesService.delete(situacoesService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

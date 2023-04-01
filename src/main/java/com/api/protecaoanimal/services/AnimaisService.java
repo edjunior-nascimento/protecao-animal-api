@@ -3,7 +3,6 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,13 +44,13 @@ public class AnimaisService {
         animaisModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
 
         animaisModel.setTemperamentos(animaisDto.getTemperamento().stream().map(v -> {
-                 TemperamentosModel temperamentosModel = temperamentosService.findById(v).get();
+                 TemperamentosModel temperamentosModel = temperamentosService.findById(v);
                  temperamentosModel.getAnimais().add(animaisModel);
                  return temperamentosModel;
              }).collect(Collectors.toList()));
 
         animaisModel.setSituacoes(animaisDto.getSituacao().stream().map(v -> {
-                SituacoesModel situacoesModel = situacoesService.findById(v).get();
+                SituacoesModel situacoesModel = situacoesService.findById(v);
                 situacoesModel.getAnimais().add(animaisModel);
                 return situacoesModel;
             }).collect(Collectors.toList()));
@@ -71,8 +70,8 @@ public class AnimaisService {
         return animaisRepository.findAll();
     }
 
-    public Optional<AnimaisModel> findById(UUID id) {
-        return animaisRepository.findById(id);
+    public AnimaisModel findById(UUID id) {
+        return animaisRepository.findById(id).get();
     }
 
     public void delete(AnimaisModel animaisModel) {

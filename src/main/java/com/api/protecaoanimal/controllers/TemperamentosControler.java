@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class TemperamentosControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar um novo temperamento para animais", description = "Cadastrar um novo temperamento para animais" )
-    public ResponseEntity<Object> savetemperamentos(@RequestBody @Valid TemperamentosDto temperamentosDto){
+    public ResponseEntity<TemperamentosModel> savetemperamentos(@RequestBody @Valid TemperamentosDto temperamentosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.save(temperamentosDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os temperamentos para animais", description = "Listar todos os temperamentos para animais")
-    public ResponseEntity<Object> getListtemperamentos(){
+    public ResponseEntity<List<TemperamentosModel>> getListtemperamentos(){
         return ResponseEntity.status(HttpStatus.OK).body(temperamentosService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir temperamentos por ID", description = "Exibir uma determinado temperamentos pelo seu ID")
-    public ResponseEntity<Object> gettemperamentos(@PathVariable UUID id){
+    public ResponseEntity<TemperamentosModel> gettemperamentos(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(temperamentosService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar temperamentos", description = "Atualiza um determinado temperamento passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updatetemperamentos(@PathVariable("id") UUID id, @RequestBody @Valid TemperamentosDto temperamentosDto){
-        Optional<TemperamentosModel> temperamentosModelOptional = temperamentosService.findById(id);
-        if (!temperamentosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<TemperamentosModel> updatetemperamentos(@PathVariable("id") UUID id, @RequestBody @Valid TemperamentosDto temperamentosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.save(temperamentosDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um temperamento", description = "Deleta uma determinado temperamento passando o seu ID")
-    public ResponseEntity<Object> deletetemperamentos(@PathVariable("id") UUID id){
-        Optional<TemperamentosModel> temperamentosModelOptional = temperamentosService.findById(id);
-        if (!temperamentosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        temperamentosService.delete(temperamentosModelOptional.get());
+    public ResponseEntity<String> deletetemperamentos(@PathVariable("id") UUID id){
+        temperamentosService.delete(temperamentosService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

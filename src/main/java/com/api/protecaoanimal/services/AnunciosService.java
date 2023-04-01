@@ -3,7 +3,6 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -36,8 +35,8 @@ public class AnunciosService {
         return anunciosRepository.findAll();
     }
 
-    public Optional<AnunciosModel> findById(UUID id) {
-        return anunciosRepository.findById(id);
+    public AnunciosModel findById(UUID id) {
+        return anunciosRepository.findById(id).get();
     }
 
     public void delete(AnunciosModel anunciosModel) {

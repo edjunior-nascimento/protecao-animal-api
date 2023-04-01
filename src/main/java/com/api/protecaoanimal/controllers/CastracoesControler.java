@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class CastracoesControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar uma nova ação", description = "Cadastrar uma nova ação" )
-    public ResponseEntity<Object> savecastracoes(@RequestBody @Valid CastracoesDto castracoesDto){
+    public ResponseEntity<CastracoesModel> savecastracoes(@RequestBody @Valid CastracoesDto castracoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(castracoesService.save(castracoesDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
-    public ResponseEntity<Object> getListcastracoes(){
+    public ResponseEntity<List<CastracoesModel>> getListcastracoes(){
         return ResponseEntity.status(HttpStatus.OK).body(castracoesService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir ação por ID", description = "Exibir uma determinada Ação pelo seu ID")
-    public ResponseEntity<Object> getcastracoes(@PathVariable UUID id){
+    public ResponseEntity<CastracoesModel> getcastracoes(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(castracoesService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updatecastracoes(@PathVariable("id") UUID id, @RequestBody @Valid CastracoesDto castracoesDto){
-        Optional<CastracoesModel> castracoesModelOptional = castracoesService.findById(id);
-        if (!castracoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<CastracoesModel> updatecastracoes(@PathVariable("id") UUID id, @RequestBody @Valid CastracoesDto castracoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(castracoesService.save(castracoesDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
-    public ResponseEntity<Object> deletecastracoes(@PathVariable("id") UUID id){
-        Optional<CastracoesModel> castracoesModelOptional = castracoesService.findById(id);
-        if (!castracoesModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        castracoesService.delete(castracoesModelOptional.get());
+    public ResponseEntity<String> deletecastracoes(@PathVariable("id") UUID id){
+        castracoesService.delete(castracoesService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

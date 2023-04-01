@@ -3,7 +3,6 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -36,8 +35,8 @@ public class CastracoesService {
         return castracoesRepository.findAll();
     }
 
-    public Optional<CastracoesModel> findById(UUID id) {
-        return castracoesRepository.findById(id);
+    public CastracoesModel findById(UUID id) {
+        return castracoesRepository.findById(id).get();
     }
 
     public void delete(CastracoesModel castracoesModel) {

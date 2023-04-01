@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class TutoresControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar um novo Tutor", description = "Cadastrar um novo tutor" )
-    public ResponseEntity<Object> savetutores(@RequestBody @Valid TutoresDto tutoresDto){
+    public ResponseEntity<TutoresModel> savetutores(@RequestBody @Valid TutoresDto tutoresDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(tutoresService.save(tutoresDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os tutores", description = "Listar todos os tutores")
-    public ResponseEntity<Object> getListtutores(){
+    public ResponseEntity<List<TutoresModel>> getListtutores(){
         return ResponseEntity.status(HttpStatus.OK).body(tutoresService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir tutor por ID", description = "Exibir uma determinado tutor pelo seu ID")
-    public ResponseEntity<Object> gettutores(@PathVariable UUID id){
+    public ResponseEntity<TutoresModel> gettutores(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(tutoresService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar tutor", description = "Atualiza um determinado tutor passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updatetutores(@PathVariable("id") UUID id, @RequestBody @Valid TutoresDto tutoresDto){
-        Optional<TutoresModel> tutoresModelOptional = tutoresService.findById(id);
-        if (!tutoresModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<TutoresModel> updatetutores(@PathVariable("id") UUID id, @RequestBody @Valid TutoresDto tutoresDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(tutoresService.save(tutoresDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma tutor", description = "Deleta uma determinada tutor passando o seu ID")
-    public ResponseEntity<Object> deletetutores(@PathVariable("id") UUID id){
-        Optional<TutoresModel> tutoresModelOptional = tutoresService.findById(id);
-        if (!tutoresModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        tutoresService.delete(tutoresModelOptional.get());
+    public ResponseEntity<String> deletetutores(@PathVariable("id") UUID id){
+        tutoresService.delete(tutoresService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 

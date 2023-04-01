@@ -1,6 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,40 +37,32 @@ public class ParceirosControler {
 
     @PostMapping
     @Operation(summary = "Cadastrar uma nova parceiro", description = "Cadastrar uma nova parceiro" )
-    public ResponseEntity<Object> saveParceiros(@RequestBody @Valid ParceirosDto parceirosDto){
+    public ResponseEntity<ParceirosModel> saveParceiros(@RequestBody @Valid ParceirosDto parceirosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
     }
 
     @GetMapping
     @Operation(summary = "Listar todos os parceiros", description = "Listar todos os parceiros")
-    public ResponseEntity<Object> getListParceiros(){
+    public ResponseEntity<List<ParceirosModel>> getListParceiros(){
         return ResponseEntity.status(HttpStatus.OK).body(parceirosService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Exibir parceiro por ID", description = "Exibir uma determinada parceiro pelo seu ID")
-    public ResponseEntity<Object> getParceiros(@PathVariable UUID id){
+    public ResponseEntity<ParceirosModel> getParceiros(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(parceirosService.findById(id));
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar parceiro", description = "Atualiza uma determinada parceiro passando o seu ID e as configurações que deseja")
-    public ResponseEntity<Object> updateParceiros(@PathVariable("id") UUID id, @RequestBody @Valid ParceirosDto parceirosDto){
-        Optional<ParceirosModel> parceirosModelOptional = parceirosService.findById(id);
-        if (!parceirosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
+    public ResponseEntity<ParceirosModel> updateParceiros(@PathVariable("id") UUID id, @RequestBody @Valid ParceirosDto parceirosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma parceiro", description = "Deleta uma determinada parceiro passando o seu ID")
-    public ResponseEntity<Object> deleteParceiros(@PathVariable("id") UUID id){
-        Optional<ParceirosModel> parceirosModelOptional = parceirosService.findById(id);
-        if (!parceirosModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item não encontado");
-        }
-        parceirosService.delete(parceirosModelOptional.get());
+    public ResponseEntity<String> deleteParceiros(@PathVariable("id") UUID id){
+        parceirosService.delete(parceirosService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 
