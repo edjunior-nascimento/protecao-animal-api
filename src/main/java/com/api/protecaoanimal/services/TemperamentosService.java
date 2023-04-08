@@ -3,11 +3,13 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.api.protecaoanimal.dtos.TemperamentosDto;
+import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.TemperamentosModel;
 import com.api.protecaoanimal.repositories.TemperamentosRepository;
 
@@ -35,10 +37,12 @@ public class TemperamentosService {
     }
 
     public TemperamentosModel findById(UUID id) {
-        return temperamentosRepository.findById(id).get();
+        Optional<TemperamentosModel> temperamentosModel = temperamentosRepository.findById(id);
+        return temperamentosModel.orElseThrow(ItemNotFoundException::new);
     }
 
     public void delete(TemperamentosModel temperamentosModel) {
+        findById(temperamentosModel.getId());
         temperamentosRepository.delete(temperamentosModel);
     }
 

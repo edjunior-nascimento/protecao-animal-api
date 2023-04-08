@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.FotosDto;
+import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.AnimaisModel;
 import com.api.protecaoanimal.models.FotosModel;
 import com.api.protecaoanimal.repositories.FotosRepository;
@@ -48,10 +50,12 @@ public class FotosService {
     }
 
     public FotosModel findById(UUID id) {
-        return fotosRepository.findById(id).get();
+        Optional<FotosModel> fotosModel = fotosRepository.findById(id);
+        return fotosModel.orElseThrow(ItemNotFoundException::new);
     }
 
     public void delete(FotosModel fotosModel) {
+        findById(fotosModel.getId());
         fotosRepository.delete(fotosModel);
     }
     

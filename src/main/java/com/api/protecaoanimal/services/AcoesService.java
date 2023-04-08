@@ -3,12 +3,14 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.AcoesDto;
+import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.AcoesModel;
 import com.api.protecaoanimal.repositories.AcoesRepository;
 
@@ -36,10 +38,12 @@ public class AcoesService {
     }
 
     public AcoesModel findById(UUID id) {
-        return acoesRepository.findById(id).get();
+        Optional<AcoesModel> acoesModel = acoesRepository.findById(id);
+        return acoesModel.orElseThrow(ItemNotFoundException::new);
     }
 
     public void delete(AcoesModel acoesModel) {
+        findById(acoesModel.getId());
         acoesRepository.delete(acoesModel);
     }
 

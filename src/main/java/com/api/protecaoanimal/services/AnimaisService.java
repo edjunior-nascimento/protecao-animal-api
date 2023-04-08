@@ -3,6 +3,7 @@ package com.api.protecaoanimal.services;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.AnimaisDto;
+import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.AnimaisModel;
 import com.api.protecaoanimal.models.SituacoesModel;
 import com.api.protecaoanimal.models.TemperamentosModel;
@@ -71,10 +73,12 @@ public class AnimaisService {
     }
 
     public AnimaisModel findById(UUID id) {
-        return animaisRepository.findById(id).get();
+        Optional<AnimaisModel> animaisModel = animaisRepository.findById(id);
+        return animaisModel.orElseThrow(ItemNotFoundException::new);
     }
 
     public void delete(AnimaisModel animaisModel) {
+        findById(animaisModel.getId());
         animaisRepository.delete(animaisModel);
     }
     

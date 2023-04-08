@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@Tag(name = "adocões")
+@Tag(name = "Adocões")
 @RequestMapping("/adocoes")
 public class AdocoesControler {
 
