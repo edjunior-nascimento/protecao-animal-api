@@ -39,7 +39,7 @@ public class AnunciosService {
 
     public AnunciosModel findById(UUID id) {
         Optional<AnunciosModel> anunciosModel = anunciosRepository.findById(id);
-        return anunciosModel.orElseThrow(ItemNotFoundException::new);
+        return anunciosModel.orElseThrow(() -> new ItemNotFoundException("UUID de anuncio não existe"));
     }
 
     public void delete(AnunciosModel anunciosModel) {

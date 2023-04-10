@@ -74,7 +74,7 @@ public class AnimaisService {
 
     public AnimaisModel findById(UUID id) {
         Optional<AnimaisModel> animaisModel = animaisRepository.findById(id);
-        return animaisModel.orElseThrow(ItemNotFoundException::new);
+        return animaisModel.orElseThrow(() -> new ItemNotFoundException("UUID de animal não existe"));
     }
 
     public void delete(AnimaisModel animaisModel) {

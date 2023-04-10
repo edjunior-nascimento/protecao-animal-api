@@ -51,7 +51,7 @@ public class FotosService {
 
     public FotosModel findById(UUID id) {
         Optional<FotosModel> fotosModel = fotosRepository.findById(id);
-        return fotosModel.orElseThrow(ItemNotFoundException::new);
+        return fotosModel.orElseThrow(() -> new ItemNotFoundException("UUID de foto não existe"));
     }
 
     public void delete(FotosModel fotosModel) {

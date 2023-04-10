@@ -39,7 +39,7 @@ public class ParceirosService {
 
     public ParceirosModel findById(UUID id) {
         Optional<ParceirosModel> parceirosModel = parceirosRepository.findById(id);
-        return parceirosModel.orElseThrow(ItemNotFoundException::new);
+        return parceirosModel.orElseThrow(() -> new ItemNotFoundException("UUID de parceiro não existe"));
     }
 
     public void delete(ParceirosModel parceirosModel) {

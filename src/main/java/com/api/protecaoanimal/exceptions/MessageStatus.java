@@ -13,8 +13,7 @@ public class MessageStatus {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
     private Date timestamp;
+    private int status;
+    private String error;
     private String mensage;
-    private String status;
-    private int statusCode;
-    
 }

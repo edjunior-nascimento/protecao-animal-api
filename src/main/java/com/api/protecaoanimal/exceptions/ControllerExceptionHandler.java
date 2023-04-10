@@ -6,25 +6,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.api.protecaoanimal.enuns.StatusEnum;
+import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class ControlerExceptionHandler {
+public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
-    @ResponseBody
     @ExceptionHandler(ItemNotFoundException.class)
     public ResponseEntity<MessageStatus> itemNotFoundException(ItemNotFoundException it) {
         MessageStatus message = new MessageStatus(
             new Date(),
-            StatusEnum.NOT_FOUND.getStatus(),
+            HttpStatus.NOT_FOUND.value(),
             HttpStatus.NOT_FOUND.getReasonPhrase(),
-            HttpStatus.NOT_FOUND.value()
+            it.getMessage()
              );
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
-
     
 }

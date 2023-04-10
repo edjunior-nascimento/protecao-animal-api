@@ -38,7 +38,7 @@ public class SituacoesService {
 
     public SituacoesModel findById(UUID id) {
         Optional<SituacoesModel> situacoesModel = situacoesRepository.findById(id);
-        return situacoesModel.orElseThrow(ItemNotFoundException::new);
+        return situacoesModel.orElseThrow(() -> new ItemNotFoundException("UUID de situação não existe"));
     }
 
     public void delete(SituacoesModel situacoesModel) {

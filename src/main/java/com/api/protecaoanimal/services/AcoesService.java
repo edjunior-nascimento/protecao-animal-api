@@ -39,7 +39,7 @@ public class AcoesService {
 
     public AcoesModel findById(UUID id) {
         Optional<AcoesModel> acoesModel = acoesRepository.findById(id);
-        return acoesModel.orElseThrow(ItemNotFoundException::new);
+        return acoesModel.orElseThrow(() -> new ItemNotFoundException("UUID de ação não existe"));
     }
 
     public void delete(AcoesModel acoesModel) {

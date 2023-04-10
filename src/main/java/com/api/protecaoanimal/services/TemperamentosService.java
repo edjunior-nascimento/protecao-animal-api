@@ -38,7 +38,7 @@ public class TemperamentosService {
 
     public TemperamentosModel findById(UUID id) {
         Optional<TemperamentosModel> temperamentosModel = temperamentosRepository.findById(id);
-        return temperamentosModel.orElseThrow(ItemNotFoundException::new);
+        return temperamentosModel.orElseThrow(() -> new ItemNotFoundException("UUID de temperamento não existe"));
     }
 
     public void delete(TemperamentosModel temperamentosModel) {

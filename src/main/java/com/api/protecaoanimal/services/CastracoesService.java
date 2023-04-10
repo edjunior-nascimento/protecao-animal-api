@@ -39,7 +39,7 @@ public class CastracoesService {
 
     public CastracoesModel findById(UUID id) {
         Optional<CastracoesModel> castracoesModel = castracoesRepository.findById(id);
-        return castracoesModel.orElseThrow(ItemNotFoundException::new);
+        return castracoesModel.orElseThrow(() -> new ItemNotFoundException("UUID de castrações não existe"));
         
     }
 

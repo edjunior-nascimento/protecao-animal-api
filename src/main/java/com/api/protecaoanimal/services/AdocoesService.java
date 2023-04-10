@@ -39,7 +39,7 @@ public class AdocoesService {
 
     public AdocoesModel findById(UUID id) {
         Optional<AdocoesModel> adocoesModel = adocoesRepository.findById(id);
-        return adocoesModel.orElseThrow(ItemNotFoundException::new);
+        return adocoesModel.orElseThrow(() -> new ItemNotFoundException("UUID de adoção não existe"));
     }
 
     public void delete(AdocoesModel adocoesModel) {

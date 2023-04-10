@@ -39,7 +39,7 @@ public class TutoresService {
 
     public TutoresModel findById(UUID id) {
         Optional<TutoresModel> acoesModel = tutoresRepository.findById(id);
-        return acoesModel.orElseThrow(ItemNotFoundException::new);
+        return acoesModel.orElseThrow(() -> new ItemNotFoundException("UUID de tutores não existe"));
     }
 
     public void delete(TutoresModel tutoresModel) {
