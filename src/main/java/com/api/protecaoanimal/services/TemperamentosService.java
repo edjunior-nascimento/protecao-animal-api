@@ -2,11 +2,12 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.api.protecaoanimal.dtos.TemperamentosDto;
 import com.api.protecaoanimal.exceptions.ItemNotFoundException;
@@ -32,8 +33,8 @@ public class TemperamentosService {
         return temperamentosRepository.save(temperamentosModel);
     }
 
-    public List<TemperamentosModel> findAll() {
-        return temperamentosRepository.findAll();
+    public Page<TemperamentosModel> findAll(Pageable pageable) {
+        return temperamentosRepository.findAll(pageable);
     }
 
     public TemperamentosModel findById(UUID id) {

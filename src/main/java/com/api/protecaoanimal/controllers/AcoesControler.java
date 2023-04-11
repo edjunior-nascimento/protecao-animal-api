@@ -1,8 +1,11 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,8 +46,8 @@ public class AcoesControler {
 
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
-    public ResponseEntity<List<AcoesModel>> getListAcoes(){
-        return ResponseEntity.status(HttpStatus.OK).body(acoesService.findAll());
+    public ResponseEntity<Page<AcoesModel>> getListAcoes(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(acoesService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

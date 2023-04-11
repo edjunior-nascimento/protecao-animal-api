@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.FotosDto;
@@ -45,8 +47,8 @@ public class FotosService {
         return listFotos;
     }
 
-    public List<FotosModel> findAll() {
-        return fotosRepository.findAll();
+    public Page<FotosModel> findAll(Pageable pageable) {
+        return fotosRepository.findAll(pageable);
     }
 
     public FotosModel findById(UUID id) {

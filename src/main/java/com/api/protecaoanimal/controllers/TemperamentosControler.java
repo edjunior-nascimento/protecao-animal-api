@@ -1,8 +1,11 @@
 package com.api.protecaoanimal.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,8 +46,8 @@ public class TemperamentosControler {
 
     @GetMapping
     @Operation(summary = "Listar todos os temperamentos para animais", description = "Listar todos os temperamentos para animais")
-    public ResponseEntity<List<TemperamentosModel>> getListtemperamentos(){
-        return ResponseEntity.status(HttpStatus.OK).body(temperamentosService.findAll());
+    public ResponseEntity<Page<TemperamentosModel>> getListtemperamentos(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(temperamentosService.findAll(pageable));
     }
 
     @GetMapping("/{id}")

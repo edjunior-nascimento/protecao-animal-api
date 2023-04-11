@@ -2,11 +2,12 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.AcoesDto;
@@ -33,8 +34,8 @@ public class AcoesService {
         return acoesRepository.save(acoesModel);
     }
 
-    public List<AcoesModel> findAll() {
-        return acoesRepository.findAll();
+    public Page<AcoesModel> findAll(Pageable pageable) {
+        return acoesRepository.findAll(pageable);
     }
 
     public AcoesModel findById(UUID id) {

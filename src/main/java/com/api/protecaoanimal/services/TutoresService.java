@@ -2,11 +2,12 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.TutoresDto;
@@ -33,8 +34,8 @@ public class TutoresService {
         return tutoresRepository.save(tutoresModel);
     }
 
-    public List<TutoresModel> findAll() {
-        return tutoresRepository.findAll();
+    public Page<TutoresModel> findAll(Pageable pageable) {
+        return tutoresRepository.findAll(pageable);
     }
 
     public TutoresModel findById(UUID id) {

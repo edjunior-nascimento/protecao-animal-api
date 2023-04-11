@@ -2,11 +2,12 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.ParceirosDto;
@@ -33,8 +34,8 @@ public class ParceirosService {
         return parceirosRepository.save(parceirosModel);
     }
 
-    public List<ParceirosModel> findAll() {
-        return parceirosRepository.findAll();
+    public Page<ParceirosModel> findAll(Pageable pageable) {
+        return parceirosRepository.findAll(pageable);
     }
 
     public ParceirosModel findById(UUID id) {
