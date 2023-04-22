@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 
+import com.api.protecaoanimal.enuns.StatusEnum;
+
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
@@ -17,7 +19,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
             new Date(),
             HttpStatus.NOT_FOUND.value(),
             HttpStatus.NOT_FOUND.getReasonPhrase(),
-            it.getMessage()
+            it.getMessage().isEmpty()?StatusEnum.NOT_FOUND.getStatus():it.getMessage()
              );
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
