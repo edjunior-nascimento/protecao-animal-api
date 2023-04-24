@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -68,5 +69,35 @@ public class AnimaisControler {
         animaisService.delete(animaisService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
+
+
+    @PostMapping("/situacoes")
+    @Operation(summary = "Adicionar situação a animal", description = "Adicionar situação a animal" )
+    public ResponseEntity<String> adicionarSituacoesDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_situacoes){
+        animaisService.adicionarSituacoesDeAnimal(id_animal, id_situacoes);
+        return ResponseEntity.status(HttpStatus.OK).body("Situação(es) vinculada(s) a animal");
+    }
+
+    @DeleteMapping("/situacoes")
+    @Operation(summary = "Deletar situacoes de animal", description = "Deletar situacoes de animal" )
+    public ResponseEntity<String> deletarSituacoesDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_situacoes){
+        animaisService.deletarSituacoesDeAnimal(id_animal, id_situacoes);
+        return ResponseEntity.status(HttpStatus.OK).body("Situação(es) removida(s) de animal");
+    }
+
+    @PostMapping("/temperamentos")
+    @Operation(summary = "Adicionar temperamento a animal", description = "Adicionar temperamento a animal" )
+    public ResponseEntity<String> adicionarTemperamentosDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_temperamentos){
+        animaisService.adicionarTemperamentosDeAnimal(id_animal, id_temperamentos);
+        return ResponseEntity.status(HttpStatus.OK).body("Temperamento(s) vinculada(s) a animal");
+    }
+
+    @DeleteMapping("/temperamentos")
+    @Operation(summary = "Deletar temperamentos de animal", description = "Deletar temperamentos de animal" )
+    public ResponseEntity<String> deletarTemperamentosDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_temperamentos){
+        animaisService.deletarTemperamentosDeAnimal(id_animal, id_temperamentos);
+        return ResponseEntity.status(HttpStatus.OK).body("Temperamento(s) removida(s) de animal");
+    }
+
 
 }

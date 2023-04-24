@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +19,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "regras")
 public class RegrasModel implements GrantedAuthority {
@@ -37,6 +36,8 @@ public class RegrasModel implements GrantedAuthority {
     @Column(nullable = false, unique = true)
     private String nome;
 
+    @Column(nullable = false)
+    private LocalDateTime registro;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

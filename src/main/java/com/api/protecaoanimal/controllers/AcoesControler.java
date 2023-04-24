@@ -44,7 +44,6 @@ public class AcoesControler {
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
     public ResponseEntity<Page<AcoesModel>> getListAcoes(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){

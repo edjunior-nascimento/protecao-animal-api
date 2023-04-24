@@ -2,6 +2,8 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -83,4 +85,40 @@ public class AnimaisService {
         animaisRepository.delete(animaisModel);
     }
     
+
+    public void adicionarSituacoesDeAnimal(UUID idAnimal, List<UUID> idSituacoes) {
+        var listaSituacoesModel = new ArrayList<SituacoesModel>();
+        var animalsModel = findById(idAnimal);
+        idSituacoes.forEach(id->listaSituacoesModel.add(situacoesService.findById(id)));
+        animalsModel.setSituacoes(listaSituacoesModel);
+        animaisRepository.save(animalsModel);
+    }
+
+    public void deletarSituacoesDeAnimal(UUID idAnimais, List<UUID> idSituacoes){
+        var animaisModel = findById(idAnimais);
+        var listaSituacoesModel = animaisModel.getSituacoes();
+        idSituacoes.forEach(id->listaSituacoesModel.remove(situacoesService.findById(id)));
+        animaisModel.setSituacoes(listaSituacoesModel);
+        animaisRepository.save(animaisModel);
+    }
+
+
+    public void adicionarTemperamentosDeAnimal(UUID idAnimal, List<UUID> idTemperamentos) {
+        var listaTemperamentosModel = new ArrayList<TemperamentosModel>();
+        var animalsModel = findById(idAnimal);
+        idTemperamentos.forEach(id->listaTemperamentosModel.add(temperamentosService.findById(id)));
+        animalsModel.setTemperamentos(listaTemperamentosModel);
+        animaisRepository.save(animalsModel);
+    }
+
+    public void deletarTemperamentosDeAnimal(UUID idAnimais, List<UUID> idTemperamentos){
+        var animaisModel = findById(idAnimais);
+        var listaTemperamentosModel = animaisModel.getTemperamentos();
+        idTemperamentos.forEach(id->listaTemperamentosModel.remove(temperamentosService.findById(id)));
+        animaisModel.setTemperamentos(listaTemperamentosModel);
+        animaisRepository.save(animaisModel);
+    }
+
+
+
 }

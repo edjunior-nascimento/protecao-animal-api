@@ -1,5 +1,6 @@
 package com.api.protecaoanimal.models;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,9 @@ public class UsuariosModel implements UserDetails {
 
     @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
+    private LocalDateTime registro;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
     private List<RegrasModel> regras;
