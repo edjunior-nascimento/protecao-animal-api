@@ -10,11 +10,15 @@ import org.hibernate.type.SqlTypes;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -40,9 +44,15 @@ public class UsuariosModel implements UserDetails {
     @Column(nullable = false)
     private LocalDateTime registro;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
+    @ManyToMany
+    @JoinTable(
+        name = "usuarios_regras", 
+        joinColumns = { @JoinColumn(name = "idUsuarios") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idRegras") }
+    )
+    @JsonIgnore
     private List<RegrasModel> regras;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.regras;

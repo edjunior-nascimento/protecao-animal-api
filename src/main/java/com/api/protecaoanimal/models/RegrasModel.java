@@ -39,15 +39,6 @@ public class RegrasModel implements GrantedAuthority {
     @Column(nullable = false)
     private LocalDateTime registro;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "usuarios_regras", 
-        joinColumns = { @JoinColumn(name = "idRegras") }, 
-        inverseJoinColumns = { @JoinColumn(name = "idUsuarios") }
-    )
-    @JsonIgnore
-    private List<UsuariosModel> usuarios;
-
     @Override
     public String getAuthority() {
         return this.nome.toString();

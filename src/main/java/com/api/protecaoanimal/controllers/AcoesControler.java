@@ -39,7 +39,7 @@ public class AcoesControler {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastrar uma nova ação", description = "Cadastrar uma nova ação" )
+    @Operation(summary = "Cadastrar uma nova regra", description = "Cadastrar uma nova regra" )
     public ResponseEntity<AcoesModel> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
@@ -51,19 +51,19 @@ public class AcoesControler {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Exibir ação por ID", description = "Exibir uma determinada Ação pelo seu ID")
+    @Operation(summary = "Exibir regra por ID", description = "Exibir uma determinada regra pelo seu ID")
     public ResponseEntity<AcoesModel> getAcoes(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(acoesService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
+    @Operation(summary = "Atualizar regra", description = "Atualiza uma determinada regra passando o seu ID e as configurações que deseja")
     public ResponseEntity<AcoesModel> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
+    @Operation(summary = "Deleta uma regra", description = "Deleta uma determinada regra passando o seu ID")
     public ResponseEntity<String> deleteAcoes(@PathVariable("id") UUID id){
         acoesService.delete(acoesService.findById(id));
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");

@@ -71,30 +71,30 @@ public class AnimaisControler {
     }
 
 
-    @PostMapping("/situacoes")
+    @PostMapping("/{id}/situacoes")
     @Operation(summary = "Adicionar situação a animal", description = "Adicionar situação a animal" )
-    public ResponseEntity<String> adicionarSituacoesDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_situacoes){
+    public ResponseEntity<String> adicionarSituacoesDeAnimal(@PathVariable("id") UUID id_animal, @RequestBody List<UUID> id_situacoes){
         animaisService.adicionarSituacoesDeAnimal(id_animal, id_situacoes);
         return ResponseEntity.status(HttpStatus.OK).body("Situação(es) vinculada(s) a animal");
     }
 
-    @DeleteMapping("/situacoes")
+    @DeleteMapping("/{id}/situacoes")
     @Operation(summary = "Deletar situacoes de animal", description = "Deletar situacoes de animal" )
-    public ResponseEntity<String> deletarSituacoesDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_situacoes){
+    public ResponseEntity<String> deletarSituacoesDeAnimal(@PathVariable("id") UUID id_animal, @RequestBody List<UUID> id_situacoes){
         animaisService.deletarSituacoesDeAnimal(id_animal, id_situacoes);
         return ResponseEntity.status(HttpStatus.OK).body("Situação(es) removida(s) de animal");
     }
 
-    @PostMapping("/temperamentos")
+    @PostMapping("/{id}/temperamentos")
     @Operation(summary = "Adicionar temperamento a animal", description = "Adicionar temperamento a animal" )
-    public ResponseEntity<String> adicionarTemperamentosDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_temperamentos){
+    public ResponseEntity<String> adicionarTemperamentosDeAnimal(@PathVariable("id") UUID id_animal, @RequestBody List<UUID> id_temperamentos){
         animaisService.adicionarTemperamentosDeAnimal(id_animal, id_temperamentos);
         return ResponseEntity.status(HttpStatus.OK).body("Temperamento(s) vinculada(s) a animal");
     }
 
-    @DeleteMapping("/temperamentos")
+    @DeleteMapping("/{id}/temperamentos")
     @Operation(summary = "Deletar temperamentos de animal", description = "Deletar temperamentos de animal" )
-    public ResponseEntity<String> deletarTemperamentosDeAnimal(@RequestBody UUID id_animal, @RequestBody List<UUID> id_temperamentos){
+    public ResponseEntity<String> deletarTemperamentosDeAnimal(@PathVariable("id") UUID id_animal, @RequestBody List<UUID> id_temperamentos){
         animaisService.deletarTemperamentosDeAnimal(id_animal, id_temperamentos);
         return ResponseEntity.status(HttpStatus.OK).body("Temperamento(s) removida(s) de animal");
     }

@@ -37,15 +37,6 @@ public class SituacoesModel implements Serializable{
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "animais_situacoes", 
-        joinColumns = { @JoinColumn(name = "idSituacao") }, 
-        inverseJoinColumns = { @JoinColumn(name = "idAnimal") }
-    )
-    @JsonIgnore
-    private List<AnimaisModel> animais;
-
     @Column(nullable = false, length = 50)
     private String nome;
 

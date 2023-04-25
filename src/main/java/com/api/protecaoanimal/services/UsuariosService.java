@@ -56,16 +56,15 @@ public class UsuariosService {
         usuariosRepository.delete(usuariosModel);
     }
 
-
-    public void adicionarRegrasDeUsuario(UUID idUsuario, List<UUID> idRegras) {
+    public UsuariosModel insertRegras(UUID idUsuario, List<UUID> idRegras) {
         var listaRegrasModel = new ArrayList<RegrasModel>();
         var usuariosModel = findById(idUsuario);
         idRegras.forEach(id->listaRegrasModel.add(regrasService.findById(id)));
         usuariosModel.setRegras(listaRegrasModel);
-        usuariosRepository.save(usuariosModel);
+        return usuariosRepository.save(usuariosModel);
     }
 
-    public void deletarRegrasDeUsuario(UUID idUsuario, List<UUID> idRegras){
+    public void deleteRegras(UUID idUsuario, List<UUID> idRegras){
         var usuariosModel = findById(idUsuario);
         var listaRegrasModel = usuariosModel.getRegras();
         idRegras.forEach(id->listaRegrasModel.remove(regrasService.findById(id)));

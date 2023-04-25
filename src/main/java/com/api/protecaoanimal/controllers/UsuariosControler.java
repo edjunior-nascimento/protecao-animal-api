@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.protecaoanimal.dtos.RegrasDto;
 import com.api.protecaoanimal.dtos.UsuariosDto;
-import com.api.protecaoanimal.models.RegrasModel;
 import com.api.protecaoanimal.models.UsuariosModel;
 import com.api.protecaoanimal.services.UsuariosService;
 
@@ -48,7 +46,7 @@ public class UsuariosControler {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
+    @Operation(summary = "Listar todos os usuarios", description = "Listar todos os usuarios")
     public ResponseEntity<Page<UsuariosModel>> buscarTodosUsuarios(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(usuariosService.findAll(pageable));
     }
@@ -72,17 +70,16 @@ public class UsuariosControler {
         return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
     }
 
-    @PostMapping("/regras")
+    @PostMapping("/{id}/regras")
     @Operation(summary = "Adicionar regras a usuario", description = "Adicionar regras a usuario" )
-    public ResponseEntity<String> adicionarRegrasDeUsuario(@RequestBody UUID id_usuario, @RequestBody List<UUID> id_regras){
-        usuariosService.adicionarRegrasDeUsuario(id_usuario, id_regras);
-        return ResponseEntity.status(HttpStatus.OK).body("Regra vinculada a usuario");
+    public ResponseEntity<UsuariosModel> insertRegras(@PathVariable("id") UUID idUsuario, @RequestBody List<UUID> idRegras){
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuariosService.insertRegras(idUsuario, idRegras));
     }
 
-    @DeleteMapping("/regras")
+    @DeleteMapping("/{id}/regras")
     @Operation(summary = "Deletar regras de usuario", description = "Deletar regras de usuario" )
-    public ResponseEntity<String> deletarRegrasDeUsuario(@RequestBody UUID id_usuario, @RequestBody List<UUID> id_regras){
-        usuariosService.deletarRegrasDeUsuario(id_usuario, id_regras);
+    public ResponseEntity<String> deleteRegras(@PathVariable("id") UUID idUsuario, @RequestBody List<UUID> idRegras){
+        usuariosService.deleteRegras(idUsuario, idRegras);
         return ResponseEntity.status(HttpStatus.OK).body("Regra(s) removida(s) de usuario");
     }
 

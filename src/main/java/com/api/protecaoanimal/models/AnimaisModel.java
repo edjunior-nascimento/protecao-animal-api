@@ -9,12 +9,15 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -63,10 +66,22 @@ public class AnimaisModel implements Serializable{
     @Column(nullable = false)
     private LocalDateTime registro;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "animais")
+    @ManyToMany
+    @JoinTable(
+        name = "animais_temperamentos", 
+        joinColumns = { @JoinColumn(name = "idAnimal") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idTemperamento") }
+    )
+    @JsonIgnore
     private List<TemperamentosModel> temperamentos;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "animais")
+    @ManyToMany
+    @JoinTable(
+        name = "animais_situacoes", 
+        joinColumns = { @JoinColumn(name = "idAnimal") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idSituacao") }
+    )
+    @JsonIgnore
     private List<SituacoesModel> situacoes;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "animais")

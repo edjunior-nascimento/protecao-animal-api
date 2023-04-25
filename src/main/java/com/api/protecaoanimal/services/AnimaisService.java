@@ -43,32 +43,10 @@ public class AnimaisService {
 
     @Transactional
     public AnimaisModel save(AnimaisDto animaisDto) {
-
         var animaisModel = new AnimaisModel();
         BeanUtils.copyProperties(animaisDto, animaisModel);
         animaisModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
-
-        animaisModel.setTemperamentos(animaisDto.getTemperamento().stream().map(v -> {
-                 TemperamentosModel temperamentosModel = temperamentosService.findById(v);
-                 temperamentosModel.getAnimais().add(animaisModel);
-                 return temperamentosModel;
-             }).collect(Collectors.toList()));
-
-        animaisModel.setSituacoes(animaisDto.getSituacao().stream().map(v -> {
-                SituacoesModel situacoesModel = situacoesService.findById(v);
-                situacoesModel.getAnimais().add(animaisModel);
-                return situacoesModel;
-            }).collect(Collectors.toList()));
-
-        var savedAnimaisModel = animaisRepository.save(animaisModel);
-
-        if(!animaisDto.getFotos().isEmpty()){
-            var savedFotosModal = fotosService.save(savedAnimaisModel, animaisDto.getFotos());
-            savedAnimaisModel.setFotos(savedFotosModal);
-
-        }
-       
-        return savedAnimaisModel;
+        return animaisRepository.save(animaisModel);
     }
 
     public Page<AnimaisModel> findAll(Pageable pageable) {

@@ -40,7 +40,7 @@ public class RegrasService {
 
     public RegrasModel findById(UUID id) {
         Optional<RegrasModel> regrasModel = regrasRepository.findById(id);
-        return regrasModel.orElseThrow(() -> new ItemNotFoundException("UUID de ação não existe"));
+        return regrasModel.orElseThrow(() -> new ItemNotFoundException("UUID de regra não existe"));
     }
 
     public void delete(RegrasModel regrasModel) {
