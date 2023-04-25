@@ -2,7 +2,6 @@ package com.api.protecaoanimal.services;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.UsuariosDto;
 import com.api.protecaoanimal.exceptions.ItemNotFoundException;
-import com.api.protecaoanimal.models.RegrasModel;
 import com.api.protecaoanimal.models.UsuariosModel;
 import com.api.protecaoanimal.repositories.UsuariosRepository;
 
