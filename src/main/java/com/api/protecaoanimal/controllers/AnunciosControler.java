@@ -59,7 +59,7 @@ public class AnunciosControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar anuncio", description = "Atualiza um determinado anuncio passando o seu ID e as configurações que deseja")
     public ResponseEntity<AnunciosModel> updateanuncios(@PathVariable("id") UUID id, @RequestBody @Valid AnunciosDto anunciosDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.update(id,anunciosDto));
     }
 
     @DeleteMapping("/{id}")

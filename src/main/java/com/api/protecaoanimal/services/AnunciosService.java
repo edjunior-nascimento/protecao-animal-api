@@ -34,6 +34,14 @@ public class AnunciosService {
         return anunciosRepository.save(anunciosModel);
     }
 
+    public AnunciosModel update(UUID id, AnunciosDto anunciosDto) {
+        var anunciosModel = new AnunciosModel();
+        BeanUtils.copyProperties(anunciosDto, anunciosModel);
+        anunciosModel.setId(id);
+        anunciosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return anunciosRepository.save(anunciosModel);
+    }
+
     public Page<AnunciosModel> findAll(Pageable pageable) {
         return anunciosRepository.findAll(pageable);
     }

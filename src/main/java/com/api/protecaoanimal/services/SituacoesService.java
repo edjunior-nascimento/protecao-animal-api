@@ -33,6 +33,14 @@ public class SituacoesService {
         return situacoesRepository.save(situacoesModel);
     }
 
+    public SituacoesModel update(UUID id, SituacoesDto situacoesDto) {
+        var situacoesModel = new SituacoesModel();
+        BeanUtils.copyProperties(situacoesDto, situacoesModel);
+        situacoesModel.setId(id);
+        situacoesModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return situacoesRepository.save(situacoesModel);
+    }
+
     public Page<SituacoesModel> findAll(Pageable pageable) {
         return situacoesRepository.findAll(pageable);
     }

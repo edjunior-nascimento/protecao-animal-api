@@ -59,7 +59,7 @@ public class TemperamentosControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar temperamentos", description = "Atualiza um determinado temperamento passando o seu ID e as configurações que deseja")
     public ResponseEntity<TemperamentosModel> updatetemperamentos(@PathVariable("id") UUID id, @RequestBody @Valid TemperamentosDto temperamentosDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.save(temperamentosDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.update(id, temperamentosDto));
     }
 
     @DeleteMapping("/{id}")

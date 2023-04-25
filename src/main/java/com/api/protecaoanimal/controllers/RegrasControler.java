@@ -59,7 +59,7 @@ public class RegrasControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurregras que deseja")
     public ResponseEntity<RegrasModel> updateregras(@PathVariable("id") UUID id, @RequestBody @Valid RegrasDto regrasDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(regrasService.save(regrasDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(regrasService.update(id, regrasDto));
     }
 
     @DeleteMapping("/{id}")

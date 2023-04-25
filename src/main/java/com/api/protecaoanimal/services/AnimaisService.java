@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -49,6 +48,14 @@ public class AnimaisService {
         return animaisRepository.save(animaisModel);
     }
 
+    public AnimaisModel update(UUID id, AnimaisDto animaisDto) {
+        var animaisModel = new AnimaisModel();
+        BeanUtils.copyProperties(animaisDto, animaisModel);
+        animaisModel.setId(id);
+        animaisModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return animaisRepository.save(animaisModel);
+    }
+
     public Page<AnimaisModel> findAll(Pageable pageable) {
         return animaisRepository.findAll(pageable);
     }
@@ -65,8 +72,8 @@ public class AnimaisService {
     
 
     public void adicionarSituacoesDeAnimal(UUID idAnimal, List<UUID> idSituacoes) {
-        var listaSituacoesModel = new ArrayList<SituacoesModel>();
         var animalsModel = findById(idAnimal);
+        var listaSituacoesModel = animalsModel.getSituacoes();
         idSituacoes.forEach(id->listaSituacoesModel.add(situacoesService.findById(id)));
         animalsModel.setSituacoes(listaSituacoesModel);
         animaisRepository.save(animalsModel);
@@ -82,8 +89,8 @@ public class AnimaisService {
 
 
     public void adicionarTemperamentosDeAnimal(UUID idAnimal, List<UUID> idTemperamentos) {
-        var listaTemperamentosModel = new ArrayList<TemperamentosModel>();
         var animalsModel = findById(idAnimal);
+        var listaTemperamentosModel = animalsModel.getTemperamentos();
         idTemperamentos.forEach(id->listaTemperamentosModel.add(temperamentosService.findById(id)));
         animalsModel.setTemperamentos(listaTemperamentosModel);
         animaisRepository.save(animalsModel);

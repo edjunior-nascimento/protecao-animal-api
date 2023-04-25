@@ -34,6 +34,14 @@ public class AdocoesService {
         return adocoesRepository.save(adocoesModel);
     }
 
+    public AdocoesModel update(UUID id, AdocoesDto adocoesDto) {
+        var adocoesModel = new AdocoesModel();
+        BeanUtils.copyProperties(adocoesDto, adocoesModel);
+        adocoesModel.setId(id);
+        adocoesModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return adocoesRepository.save(adocoesModel);
+    }
+
     public Page<AdocoesModel> findAll(Pageable pageable) {
         return adocoesRepository.findAll(pageable);
     }

@@ -59,7 +59,7 @@ public class AcoesControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar regra", description = "Atualiza uma determinada regra passando o seu ID e as configurações que deseja")
     public ResponseEntity<AcoesModel> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.update(id, acoesDto));
     }
 
     @DeleteMapping("/{id}")

@@ -59,7 +59,7 @@ public class CastracoesControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
     public ResponseEntity<CastracoesModel> updatecastracoes(@PathVariable("id") UUID id, @RequestBody @Valid CastracoesDto castracoesDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(castracoesService.save(castracoesDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(castracoesService.update(id, castracoesDto));
     }
 
     @DeleteMapping("/{id}")

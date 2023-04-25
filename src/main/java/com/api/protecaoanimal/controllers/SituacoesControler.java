@@ -59,7 +59,7 @@ public class SituacoesControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar situações", description = "Atualiza um determinado situação passando o seu ID e as configurações que deseja")
     public ResponseEntity<SituacoesModel> updatesituacoes(@PathVariable("id") UUID id, @RequestBody @Valid SituacoesDto situacoesDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.save(situacoesDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.update(id, situacoesDto));
     }
 
     @DeleteMapping("/{id}")

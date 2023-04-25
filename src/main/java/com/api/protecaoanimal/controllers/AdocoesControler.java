@@ -59,7 +59,7 @@ public class AdocoesControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar adoção", description = "Atualiza uma determinada adoção passando o seu ID e as configurações que deseja")
     public ResponseEntity<AdocoesModel> updateadocoes(@PathVariable("id") UUID id, @RequestBody @Valid AdocoesDto adocoesDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(adocoesService.save(adocoesDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(adocoesService.update(id, adocoesDto));
     }
 
     @DeleteMapping("/{id}")

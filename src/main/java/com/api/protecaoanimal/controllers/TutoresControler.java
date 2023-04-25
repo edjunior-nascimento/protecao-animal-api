@@ -59,7 +59,7 @@ public class TutoresControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar tutor", description = "Atualiza um determinado tutor passando o seu ID e as configurações que deseja")
     public ResponseEntity<TutoresModel> updatetutores(@PathVariable("id") UUID id, @RequestBody @Valid TutoresDto tutoresDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(tutoresService.save(tutoresDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(tutoresService.update(id, tutoresDto));
     }
 
     @DeleteMapping("/{id}")

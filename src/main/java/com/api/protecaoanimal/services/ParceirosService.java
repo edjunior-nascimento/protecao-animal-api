@@ -34,6 +34,14 @@ public class ParceirosService {
         return parceirosRepository.save(parceirosModel);
     }
 
+    public ParceirosModel update(UUID id, ParceirosDto parceirosDto) {
+        var parceirosModel = new ParceirosModel();
+        BeanUtils.copyProperties(parceirosDto, parceirosModel);
+        parceirosModel.setId(id);
+        parceirosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return parceirosRepository.save(parceirosModel);
+    }
+
     public Page<ParceirosModel> findAll(Pageable pageable) {
         return parceirosRepository.findAll(pageable);
     }

@@ -34,6 +34,14 @@ public class AcoesService {
         return acoesRepository.save(acoesModel);
     }
 
+    public AcoesModel update(UUID id, AcoesDto acoesDto) {
+        var acoesModel = new AcoesModel();
+        BeanUtils.copyProperties(acoesDto, acoesModel);
+        acoesModel.setId(id);
+        acoesModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return acoesRepository.save(acoesModel);
+    }
+
     public Page<AcoesModel> findAll(Pageable pageable) {
         return acoesRepository.findAll(pageable);
     }

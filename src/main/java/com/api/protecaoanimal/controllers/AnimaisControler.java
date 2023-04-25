@@ -60,7 +60,7 @@ public class AnimaisControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar dados de animal", description = "Atualizar dados de animal")
     public ResponseEntity<AnimaisModel> updateanimais(@PathVariable("id") UUID id, @RequestBody @Valid AnimaisDto animaisDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(animaisService.save(animaisDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(animaisService.update(id, animaisDto));
     }
 
     @DeleteMapping("/{id}")

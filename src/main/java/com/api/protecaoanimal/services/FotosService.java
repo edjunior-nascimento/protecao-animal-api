@@ -34,6 +34,14 @@ public class FotosService {
         return fotosRepository.save(fotosModel);
     }
 
+    public FotosModel update(UUID id, FotosDto fotosDto) {
+        var fotosModel = new FotosModel();
+        BeanUtils.copyProperties(fotosDto, fotosModel);
+        fotosModel.setId(id);
+        fotosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return fotosRepository.save(fotosModel);
+    }
+
     public List<FotosModel> save(AnimaisModel animaisModel, List<FotosDto> fotosDto){
         var listFotos = new ArrayList<FotosModel>();
 

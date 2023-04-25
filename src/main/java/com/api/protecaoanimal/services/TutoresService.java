@@ -34,6 +34,14 @@ public class TutoresService {
         return tutoresRepository.save(tutoresModel);
     }
 
+    public TutoresModel update(UUID id, TutoresDto tutoresDto) {
+        var tutoresModel = new TutoresModel();
+        BeanUtils.copyProperties(tutoresDto, tutoresModel);
+        tutoresModel.setId(id);
+        tutoresModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return tutoresRepository.save(tutoresModel);
+    }
+
     public Page<TutoresModel> findAll(Pageable pageable) {
         return tutoresRepository.findAll(pageable);
     }

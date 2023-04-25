@@ -34,6 +34,14 @@ public class CastracoesService {
         return castracoesRepository.save(castracoesModel);
     }
 
+    public CastracoesModel update(UUID id, CastracoesDto castracoesDto) {
+        var castracoesModel = new CastracoesModel();
+        BeanUtils.copyProperties(castracoesDto, castracoesModel);
+        castracoesModel.setId(id);
+        castracoesModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return castracoesRepository.save(castracoesModel);
+    }
+
     public Page<CastracoesModel> findAll(Pageable pageable) {
         return castracoesRepository.findAll(pageable);
     }

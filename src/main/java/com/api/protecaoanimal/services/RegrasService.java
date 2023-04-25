@@ -34,6 +34,14 @@ public class RegrasService {
         return regrasRepository.save(regrasModel);
     }
 
+    public RegrasModel update(UUID id, RegrasDto regrasDto) {
+        var regrasModel = new RegrasModel();
+        BeanUtils.copyProperties(regrasDto, regrasModel);
+        regrasModel.setId(id);
+        regrasModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return regrasRepository.save(regrasModel);
+    }
+
     public Page<RegrasModel> findAll(Pageable pageable) {
         return regrasRepository.findAll(pageable);
     }

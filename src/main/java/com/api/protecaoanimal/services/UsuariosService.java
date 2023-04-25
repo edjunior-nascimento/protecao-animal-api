@@ -42,6 +42,14 @@ public class UsuariosService {
         return usuariosRepository.save(usuariosModel);
     }
 
+    public UsuariosModel update(UUID id, UsuariosDto usuariosDto) {
+        var usuariosModel = new UsuariosModel();
+        BeanUtils.copyProperties(usuariosDto, usuariosModel);
+        usuariosModel.setId(id);
+        usuariosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return usuariosRepository.save(usuariosModel);
+    }
+
     public Page<UsuariosModel> findAll(Pageable pageable) {
         return usuariosRepository.findAll(pageable);
     }
@@ -57,8 +65,8 @@ public class UsuariosService {
     }
 
     public UsuariosModel insertRegras(UUID idUsuario, List<UUID> idRegras) {
-        var listaRegrasModel = new ArrayList<RegrasModel>();
         var usuariosModel = findById(idUsuario);
+        var listaRegrasModel = usuariosModel.getRegras();
         idRegras.forEach(id->listaRegrasModel.add(regrasService.findById(id)));
         usuariosModel.setRegras(listaRegrasModel);
         return usuariosRepository.save(usuariosModel);

@@ -33,6 +33,14 @@ public class TemperamentosService {
         return temperamentosRepository.save(temperamentosModel);
     }
 
+    public TemperamentosModel update(UUID id, TemperamentosDto temperamentosDto) {
+        var temperamentosModel = new TemperamentosModel();
+        BeanUtils.copyProperties(temperamentosDto, temperamentosModel);
+        temperamentosModel.setId(id);
+        temperamentosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+        return temperamentosRepository.save(temperamentosModel);
+    }
+
     public Page<TemperamentosModel> findAll(Pageable pageable) {
         return temperamentosRepository.findAll(pageable);
     }

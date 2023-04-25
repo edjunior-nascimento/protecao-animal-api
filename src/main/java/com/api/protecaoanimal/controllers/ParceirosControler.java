@@ -59,7 +59,7 @@ public class ParceirosControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar parceiro", description = "Atualiza uma determinada parceiro passando o seu ID e as configurações que deseja")
     public ResponseEntity<ParceirosModel> updateParceiros(@PathVariable("id") UUID id, @RequestBody @Valid ParceirosDto parceirosDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.update(id, parceirosDto));
     }
 
     @DeleteMapping("/{id}")

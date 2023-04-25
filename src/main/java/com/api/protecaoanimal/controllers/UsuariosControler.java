@@ -60,7 +60,7 @@ public class UsuariosControler {
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar usuário", description = "Atualiza uma determinada usuário passando o seu ID e as configurações que deseja")
     public ResponseEntity<UsuariosModel> atualizarUsuario(@PathVariable("id") UUID id, @RequestBody @Valid UsuariosDto usuariosDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuariosService.save(usuariosDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuariosService.update(id, usuariosDto));
     }
 
     @DeleteMapping("/{id}")
