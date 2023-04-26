@@ -24,5 +24,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ItemIsUsedException.class)
+    public ResponseEntity<MessageStatus> itemIsUsedException(ItemIsUsedException it) {
+        MessageStatus message = new MessageStatus(
+            new Date(),
+            HttpStatus.CONFLICT.value(),
+            HttpStatus.CONFLICT.getReasonPhrase(),
+            it.getMessage().isEmpty()?StatusEnum.CONFLICT.getStatus():it.getMessage()
+             );
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
     
 }

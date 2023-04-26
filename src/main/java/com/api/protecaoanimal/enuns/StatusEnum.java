@@ -55,16 +55,8 @@ public enum StatusEnum {
     return code;
   }
 
-  public void setCode(int code) {
-    this.code = code;
-  }
-
   public String getStatus() {
     return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
   }
 
   public static StatusEnum fromString(String value) {

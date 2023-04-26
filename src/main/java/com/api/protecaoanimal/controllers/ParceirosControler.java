@@ -64,9 +64,9 @@ public class ParceirosControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma parceiro", description = "Deleta uma determinada parceiro passando o seu ID")
-    public ResponseEntity<String> deleteParceiros(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteParceiros(@PathVariable("id") UUID id){
         parceirosService.delete(parceirosService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

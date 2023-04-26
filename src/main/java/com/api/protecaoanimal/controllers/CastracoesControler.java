@@ -64,9 +64,9 @@ public class CastracoesControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
-    public ResponseEntity<String> deletecastracoes(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deletecastracoes(@PathVariable("id") UUID id){
         castracoesService.delete(castracoesService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -64,9 +64,9 @@ public class SituacoesControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um situação", description = "Deleta uma determinado situação passando o seu ID")
-    public ResponseEntity<String> deletesituacoes(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deletesituacoes(@PathVariable("id") UUID id){
         situacoesService.delete(situacoesService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

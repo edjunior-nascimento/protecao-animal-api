@@ -64,9 +64,9 @@ public class AnunciosControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma anuncio", description = "Deleta uma determinada anuncio passando o seu ID")
-    public ResponseEntity<String> deleteanuncios(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteanuncios(@PathVariable("id") UUID id){
         anunciosService.delete(anunciosService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo. ");
+        return ResponseEntity.noContent().build();
     }
 
 }

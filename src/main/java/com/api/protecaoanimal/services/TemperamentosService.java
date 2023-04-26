@@ -6,10 +6,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.api.protecaoanimal.dtos.TemperamentosDto;
+import com.api.protecaoanimal.exceptions.ItemIsUsedException;
 import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.TemperamentosModel;
 import com.api.protecaoanimal.repositories.TemperamentosRepository;
@@ -52,7 +54,11 @@ public class TemperamentosService {
 
     public void delete(TemperamentosModel temperamentosModel) {
         findById(temperamentosModel.getId());
-        temperamentosRepository.delete(temperamentosModel);
+        try{
+            temperamentosRepository.delete(temperamentosModel);
+        } catch (DataIntegrityViolationException e) {
+            throw new ItemIsUsedException("Temperamento não pode ser deletada, pois está em uso por algum animal");
+        }
     }
 
 }

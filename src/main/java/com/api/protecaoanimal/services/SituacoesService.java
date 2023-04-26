@@ -6,10 +6,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.api.protecaoanimal.dtos.SituacoesDto;
+import com.api.protecaoanimal.exceptions.ItemIsUsedException;
 import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.SituacoesModel;
 import com.api.protecaoanimal.repositories.SituacoesRepository;
@@ -52,7 +54,11 @@ public class SituacoesService {
 
     public void delete(SituacoesModel situacoesModel) {
         findById(situacoesModel.getId());
-        situacoesRepository.delete(situacoesModel);
+        try{
+            situacoesRepository.delete(situacoesModel);
+        } catch (DataIntegrityViolationException e) {
+            throw new ItemIsUsedException("Situação não pode ser deletada, pois está em uso por algum animal");
+        }
     }
 
 }

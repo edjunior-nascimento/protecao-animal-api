@@ -65,9 +65,9 @@ public class UsuariosControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma usuário", description = "Deleta uma determinada usuário passando o seu ID")
-    public ResponseEntity<String> deletarUsuario(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deletarUsuario(@PathVariable("id") UUID id){
         usuariosService.delete(usuariosService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/regras")
@@ -78,9 +78,9 @@ public class UsuariosControler {
 
     @DeleteMapping("/{id}/regras")
     @Operation(summary = "Deletar regras de usuario", description = "Deletar regras de usuario" )
-    public ResponseEntity<String> deleteRegras(@PathVariable("id") UUID idUsuario, @RequestBody List<UUID> idRegras){
+    public ResponseEntity<Void> deleteRegras(@PathVariable("id") UUID idUsuario, @RequestBody List<UUID> idRegras){
         usuariosService.deleteRegras(idUsuario, idRegras);
-        return ResponseEntity.status(HttpStatus.OK).body("Regra(s) removida(s) de usuario");
+        return ResponseEntity.noContent().build();
     }
 
 

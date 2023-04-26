@@ -64,9 +64,9 @@ public class RegrasControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
-    public ResponseEntity<String> deleteregras(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteregras(@PathVariable("id") UUID id){
         regrasService.delete(regrasService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

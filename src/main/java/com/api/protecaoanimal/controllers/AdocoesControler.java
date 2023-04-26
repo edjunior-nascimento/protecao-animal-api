@@ -64,9 +64,9 @@ public class AdocoesControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma adoção", description = "Deleta uma determinada adoção passando o seu ID")
-    public ResponseEntity<String> deleteadocoes(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteadocoes(@PathVariable("id") UUID id){
         adocoesService.delete(adocoesService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -65,9 +65,9 @@ public class AnimaisControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma animal pelo ID", description = "Deleta uma determinado animal passando o seu ID")
-    public ResponseEntity<String> deleteanimais(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteanimais(@PathVariable("id") UUID id){
         animaisService.delete(animaisService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 
@@ -94,9 +94,9 @@ public class AnimaisControler {
 
     @DeleteMapping("/{id}/temperamentos")
     @Operation(summary = "Deletar temperamentos de animal", description = "Deletar temperamentos de animal" )
-    public ResponseEntity<String> deletarTemperamentosDeAnimal(@PathVariable("id") UUID idAnimal, @RequestBody List<UUID> idTemperamentos){
+    public ResponseEntity<Void> deletarTemperamentosDeAnimal(@PathVariable("id") UUID idAnimal, @RequestBody List<UUID> idTemperamentos){
         animaisService.deletarTemperamentosDeAnimal(idAnimal, idTemperamentos);
-        return ResponseEntity.status(HttpStatus.OK).body("Temperamento(s) removida(s) de animal");
+        return ResponseEntity.noContent().build();
     }
 
 

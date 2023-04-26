@@ -6,11 +6,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.protecaoanimal.dtos.RegrasDto;
+import com.api.protecaoanimal.exceptions.ItemIsUsedException;
 import com.api.protecaoanimal.exceptions.ItemNotFoundException;
 import com.api.protecaoanimal.models.RegrasModel;
 import com.api.protecaoanimal.repositories.RegrasRepository;
@@ -53,7 +55,11 @@ public class RegrasService {
 
     public void delete(RegrasModel regrasModel) {
         findById(regrasModel.getId());
-        regrasRepository.delete(regrasModel);
+        try{
+            regrasRepository.delete(regrasModel);
+        } catch (DataIntegrityViolationException e) {
+            throw new ItemIsUsedException("Regra não pode ser deletada, pois está em uso por algum usuário");
+        }
     }
 
 }

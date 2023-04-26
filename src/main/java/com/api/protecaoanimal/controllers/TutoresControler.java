@@ -64,9 +64,9 @@ public class TutoresControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma tutor", description = "Deleta uma determinada tutor passando o seu ID")
-    public ResponseEntity<String> deletetutores(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deletetutores(@PathVariable("id") UUID id){
         tutoresService.delete(tutoresService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -75,7 +75,7 @@ public class UsuariosService {
         var listaRegrasModel = usuariosModel.getRegras();
         idRegras.forEach(id->listaRegrasModel.remove(regrasService.findById(id)));
         usuariosModel.setRegras(listaRegrasModel);
-        usuariosRepository.save(usuariosModel);
+        usuariosRepository.save(usuariosModel);       
     }
 
 }

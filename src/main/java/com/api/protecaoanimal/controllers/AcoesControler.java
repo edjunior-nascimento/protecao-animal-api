@@ -64,9 +64,9 @@ public class AcoesControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma regra", description = "Deleta uma determinada regra passando o seu ID")
-    public ResponseEntity<String> deleteAcoes(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deleteAcoes(@PathVariable("id") UUID id){
         acoesService.delete(acoesService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }

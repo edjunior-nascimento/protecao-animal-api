@@ -64,9 +64,9 @@ public class TemperamentosControler {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um temperamento", description = "Deleta uma determinado temperamento passando o seu ID")
-    public ResponseEntity<String> deletetemperamentos(@PathVariable("id") UUID id){
+    public ResponseEntity<Void> deletetemperamentos(@PathVariable("id") UUID id){
         temperamentosService.delete(temperamentosService.findById(id));
-        return ResponseEntity.status(HttpStatus.OK).body("Deletado com successo.");
+        return ResponseEntity.noContent().build();
     }
 
 }
