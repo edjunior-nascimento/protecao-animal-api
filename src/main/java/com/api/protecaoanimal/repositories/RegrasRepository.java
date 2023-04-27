@@ -9,5 +9,5 @@ import com.api.protecaoanimal.models.RegrasModel;
 
 @Repository
 public interface RegrasRepository extends JpaRepository<RegrasModel, UUID>{
-    
+    boolean existsByNome(String nome);
 }

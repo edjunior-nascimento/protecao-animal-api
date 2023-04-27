@@ -44,6 +44,7 @@ public class UsuariosService {
         var usuariosModel = new UsuariosModel();
         BeanUtils.copyProperties(usuariosDto, usuariosModel);
         usuariosModel.setId(id);
+        usuariosModel.setSenha(new BCryptPasswordEncoder().encode(usuariosModel.getLogin()));
         usuariosModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
         return usuariosRepository.save(usuariosModel);
     }

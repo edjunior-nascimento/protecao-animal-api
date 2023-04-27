@@ -12,5 +12,6 @@ import com.api.protecaoanimal.models.UsuariosModel;
 public interface UsuariosRepository extends JpaRepository<UsuariosModel, UUID>{
 
     Optional<UsuariosModel> findByLogin(String nome);
+    Optional<UsuariosModel> findByLoginAndSenha(String login, String senha);
     
 }

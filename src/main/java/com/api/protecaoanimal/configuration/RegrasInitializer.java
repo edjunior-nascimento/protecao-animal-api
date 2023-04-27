@@ -22,10 +22,12 @@ public class RegrasInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         for (RegrasEnum regrasEnum : RegrasEnum.values()) {
-            RegrasModel regrasModel = new RegrasModel();
-            regrasModel.setNome(regrasEnum.name());
-            regrasModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
-            regrasRepository.save(regrasModel);
+            if(!regrasRepository.existsByNome(regrasEnum.name())){
+                RegrasModel regrasModel = new RegrasModel();
+                regrasModel.setNome(regrasEnum.name());
+                regrasModel.setRegistro(LocalDateTime.now(ZoneId.of("UTC")));
+                regrasRepository.save(regrasModel);
+            }
         }
     }
     
