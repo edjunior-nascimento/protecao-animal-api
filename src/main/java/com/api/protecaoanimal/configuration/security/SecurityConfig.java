@@ -2,10 +2,8 @@ package com.api.protecaoanimal.configuration.security;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
@@ -22,10 +20,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // @Autowired
-    // private CustomAuthenticationProvider customAuthenticationProvider;
- 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -35,8 +29,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                // .loginPage("/login")
-                // .defaultSuccessUrl("/")
+                //.loginPage("/login")
                 .permitAll()
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
@@ -46,16 +39,14 @@ public class SecurityConfig {
                 })
                 .and()
             .logout()
-                .permitAll()
+                .logoutUrl("/logout") // Definindo a URL de logout
+                .logoutSuccessUrl("/login") // Definindo a página de sucesso após logout
+                .invalidateHttpSession(true) // Invalidando a sessão do usuário
+                .deleteCookies("JSESSIONID") // Deletando o cookie da sessão
                 .and()
             .csrf().disable();
         return http.build();
     }
-
-    // @Autowired
-    // public void configureGlobal(AuthenticationManagerBuilder auth) {
-    //     auth.authenticationProvider(customAuthenticationProvider);
-    // }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
