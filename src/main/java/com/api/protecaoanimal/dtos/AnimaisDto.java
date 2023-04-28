@@ -13,7 +13,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(name = "animais")
 public class AnimaisDto {
 
     @NotBlank(message = "Campo Nome obrigatório")
