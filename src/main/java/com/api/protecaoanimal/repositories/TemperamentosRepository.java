@@ -9,6 +9,7 @@ import com.api.protecaoanimal.models.TemperamentosModel;
 
 @Repository
 public interface TemperamentosRepository extends JpaRepository<TemperamentosModel, UUID>{
+    boolean existsByNome(String nome);
     
     
 }

@@ -9,5 +9,6 @@ import com.api.protecaoanimal.models.SituacoesModel;
 
 @Repository
 public interface SituacoesRepository extends JpaRepository<SituacoesModel, UUID>{
+    boolean existsByNome(String nome);
     
 }

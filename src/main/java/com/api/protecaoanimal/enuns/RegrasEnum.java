@@ -1,24 +1,16 @@
 package com.api.protecaoanimal.enuns;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum RegrasEnum {
 
-    ADMIN("Administrador", 0),
-    USER("Usuário", 1),
-    GUEST("Convidado", 2);
+    ADMIN("Administrador"),
+    USER("Usuário"),
+    GUEST("Convidado");
 
     private String description;
-    private int code;
 
-    RegrasEnum(String description, int code) {
-        this.description = description;
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getCode() {
-        return code;
-    }
 }
