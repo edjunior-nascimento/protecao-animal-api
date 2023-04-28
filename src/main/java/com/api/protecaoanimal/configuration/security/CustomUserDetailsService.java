@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.User;
@@ -45,25 +46,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         return authorities;
     }
 
-    public UsuariosModel authenticate(String username, String password) {
-        UsuariosModel usuariosModel = usuariosRepository.findByLogin(username).orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
-        String hashedPassword = hashPassword(password, usuariosModel.getSalt());
-        if(hashedPassword.equals(usuariosModel.getPassword())){
-            return usuariosModel;
-        }else{
-            return null;
-        }
-    }
-
-    private String hashPassword(String password, String salt) {
-        String hashedPassword = null;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest((password + salt).getBytes(StandardCharsets.UTF_8));
-            hashedPassword = Base64.getEncoder().encodeToString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return hashedPassword;
-    }
 }

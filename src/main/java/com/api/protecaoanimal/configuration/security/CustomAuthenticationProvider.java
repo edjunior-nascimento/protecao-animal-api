@@ -1,37 +1,41 @@
-// package com.api.protecaoanimal.configuration.security;
+package com.api.protecaoanimal.configuration.security;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.security.authentication.AuthenticationProvider;
-// import org.springframework.security.authentication.BadCredentialsException;
-// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.security.core.AuthenticationException;
-// import org.springframework.security.core.userdetails.UserDetails;
-// import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
-// @Service
-// public class CustomAuthenticationProvider implements AuthenticationProvider {
+@Component
+public class CustomAuthenticationProvider implements AuthenticationProvider {
     
-//     @Autowired
-//     private CustomUserDetailsService authenticationService;
+    @Autowired
+    private CustomUserDetailsService authenticationService;
 
-//     @Override
-//     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-//         String login = authentication.getName();
-//         String senha = authentication.getCredentials().toString();
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
-//         UserDetails userDetails = authenticationService.loadUserByUsername(login);
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String login = authentication.getName();
+        String senha = authentication.getCredentials().toString();
 
-//         if (!senha.equals(userDetails.getPassword())) {
-//             throw new BadCredentialsException("Senha Inválida");
-//         }
+        UserDetails userDetails = authenticationService.loadUserByUsername(login);
 
-//         return new UsernamePasswordAuthenticationToken(login, senha, userDetails.getAuthorities());        
+        if (!passwordEncoder.matches(senha, userDetails.getPassword())) {
+            throw new BadCredentialsException("Credenciais inválidas");
+        }
+
+        return new UsernamePasswordAuthenticationToken(login, senha, userDetails.getAuthorities());        
         
-//     }
+    }
 
-//     @Override
-//     public boolean supports(Class<?> authentication) {
-//         return authentication.equals(UsernamePasswordAuthenticationToken.class);
-//     }
-// }
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
+}

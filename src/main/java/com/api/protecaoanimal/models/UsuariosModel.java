@@ -40,9 +40,6 @@ public class UsuariosModel implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @Column
-    private String salt;
-
     @Column(nullable = false)
     private LocalDateTime registro;
 
