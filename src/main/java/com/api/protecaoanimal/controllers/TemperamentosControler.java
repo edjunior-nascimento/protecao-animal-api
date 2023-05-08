@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class TemperamentosControler {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Cadastrar um novo temperamento para animais", description = "Cadastrar um novo temperamento para animais" )
     public ResponseEntity<TemperamentosModel> savetemperamentos(@RequestBody @Valid TemperamentosDto temperamentosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.save(temperamentosDto));
@@ -57,12 +59,14 @@ public class TemperamentosControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Atualizar temperamentos", description = "Atualiza um determinado temperamento passando o seu ID e as configurações que deseja")
     public ResponseEntity<TemperamentosModel> updatetemperamentos(@PathVariable("id") UUID id, @RequestBody @Valid TemperamentosDto temperamentosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(temperamentosService.update(id, temperamentosDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Deleta um temperamento", description = "Deleta uma determinado temperamento passando o seu ID")
     public ResponseEntity<Void> deletetemperamentos(@PathVariable("id") UUID id){
         temperamentosService.delete(temperamentosService.findById(id));

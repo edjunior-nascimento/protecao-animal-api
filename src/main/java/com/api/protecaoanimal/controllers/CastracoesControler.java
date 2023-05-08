@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,12 +58,14 @@ public class CastracoesControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurações que deseja")
     public ResponseEntity<CastracoesModel> updatecastracoes(@PathVariable("id") UUID id, @RequestBody @Valid CastracoesDto castracoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(castracoesService.update(id, castracoesDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
     public ResponseEntity<Void> deletecastracoes(@PathVariable("id") UUID id){
         castracoesService.delete(castracoesService.findById(id));

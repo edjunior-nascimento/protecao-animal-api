@@ -30,9 +30,9 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Usuários")
 @RequestMapping("/usuarios")
-
 public class UsuariosControler {
 
     final UsuariosService usuariosService;
@@ -48,7 +48,7 @@ public class UsuariosControler {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Listar todos os usuarios", description = "Listar todos os usuarios")
     public ResponseEntity<Page<UsuariosModel>> buscarTodosUsuarios(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(usuariosService.findAll(pageable));

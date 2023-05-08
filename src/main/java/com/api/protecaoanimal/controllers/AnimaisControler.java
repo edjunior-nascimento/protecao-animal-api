@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,12 +59,14 @@ public class AnimaisControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar dados de animal", description = "Atualizar dados de animal")
     public ResponseEntity<AnimaisModel> updateanimais(@PathVariable("id") UUID id, @RequestBody @Valid AnimaisDto animaisDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(animaisService.update(id, animaisDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma animal pelo ID", description = "Deleta uma determinado animal passando o seu ID")
     public ResponseEntity<Void> deleteanimais(@PathVariable("id") UUID id){
         animaisService.delete(animaisService.findById(id));

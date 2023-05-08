@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
+@PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Regras")
 @RequestMapping("/regras")
 public class RegrasControler {
@@ -39,7 +41,7 @@ public class RegrasControler {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastrar uma nova ação", description = "Cadastrar uma nova ação" )
+    @Operation(summary = "Cadastrar uma nova regra", description = "Cadastrar uma nova regra" )
     public ResponseEntity<RegrasModel> saveregras(@RequestBody @Valid RegrasDto regrasDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(regrasService.save(regrasDto));
     }
@@ -51,19 +53,19 @@ public class RegrasControler {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Exibir ação por ID", description = "Exibir uma determinada Ação pelo seu ID")
+    @Operation(summary = "Exibir regra por ID", description = "Exibir uma determinada regra pelo seu ID")
     public ResponseEntity<RegrasModel> getregras(@PathVariable UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(regrasService.findById(id));
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar ação", description = "Atualiza uma determinada Ação passando o seu ID e as configurregras que deseja")
+    @Operation(summary = "Atualizar regra", description = "Atualiza uma determinada regra passando o seu ID e as configurregras que deseja")
     public ResponseEntity<RegrasModel> updateregras(@PathVariable("id") UUID id, @RequestBody @Valid RegrasDto regrasDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(regrasService.update(id, regrasDto));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta uma ação", description = "Deleta uma determinada Ação passando o seu ID")
+    @Operation(summary = "Deleta uma regra", description = "Deleta uma determinada regra passando o seu ID")
     public ResponseEntity<Void> deleteregras(@PathVariable("id") UUID id){
         regrasService.delete(regrasService.findById(id));
         return ResponseEntity.noContent().build();

@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class ParceirosControler {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Cadastrar uma nova parceiro", description = "Cadastrar uma nova parceiro" )
     public ResponseEntity<ParceirosModel> saveParceiros(@RequestBody @Valid ParceirosDto parceirosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.save(parceirosDto));
@@ -57,12 +59,14 @@ public class ParceirosControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar parceiro", description = "Atualiza uma determinada parceiro passando o seu ID e as configurações que deseja")
     public ResponseEntity<ParceirosModel> updateParceiros(@PathVariable("id") UUID id, @RequestBody @Valid ParceirosDto parceirosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(parceirosService.update(id, parceirosDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma parceiro", description = "Deleta uma determinada parceiro passando o seu ID")
     public ResponseEntity<Void> deleteParceiros(@PathVariable("id") UUID id){
         parceirosService.delete(parceirosService.findById(id));

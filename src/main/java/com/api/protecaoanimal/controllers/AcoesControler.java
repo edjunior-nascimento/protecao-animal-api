@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class AcoesControler {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Cadastrar uma nova regra", description = "Cadastrar uma nova regra" )
     public ResponseEntity<AcoesModel> saveAcoes(@RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.save(acoesDto));
@@ -57,12 +59,14 @@ public class AcoesControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar regra", description = "Atualiza uma determinada regra passando o seu ID e as configurações que deseja")
     public ResponseEntity<AcoesModel> updateAcoes(@PathVariable("id") UUID id, @RequestBody @Valid AcoesDto acoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(acoesService.update(id, acoesDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma regra", description = "Deleta uma determinada regra passando o seu ID")
     public ResponseEntity<Void> deleteAcoes(@PathVariable("id") UUID id){
         acoesService.delete(acoesService.findById(id));

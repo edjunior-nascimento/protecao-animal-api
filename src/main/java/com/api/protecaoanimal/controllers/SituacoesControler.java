@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class SituacoesControler {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Cadastrar uma nova situação para animais", description = "Cadastrar uma nova situação para animais" )
     public ResponseEntity<SituacoesModel> savesituacoes(@RequestBody @Valid SituacoesDto situacoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.save(situacoesDto));
@@ -57,12 +59,14 @@ public class SituacoesControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Atualizar situações", description = "Atualiza um determinado situação passando o seu ID e as configurações que deseja")
     public ResponseEntity<SituacoesModel> updatesituacoes(@PathVariable("id") UUID id, @RequestBody @Valid SituacoesDto situacoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(situacoesService.update(id, situacoesDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Operation(summary = "Deleta um situação", description = "Deleta uma determinado situação passando o seu ID")
     public ResponseEntity<Void> deletesituacoes(@PathVariable("id") UUID id){
         situacoesService.delete(situacoesService.findById(id));

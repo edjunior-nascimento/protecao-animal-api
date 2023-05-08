@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +47,7 @@ public class TutoresControler {
 
     @GetMapping
     @Operation(summary = "Listar todos os tutores", description = "Listar todos os tutores")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     public ResponseEntity<Page<TutoresModel>> getListtutores(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(tutoresService.findAll(pageable));
     }
@@ -57,12 +59,14 @@ public class TutoresControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar tutor", description = "Atualiza um determinado tutor passando o seu ID e as configurações que deseja")
     public ResponseEntity<TutoresModel> updatetutores(@PathVariable("id") UUID id, @RequestBody @Valid TutoresDto tutoresDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(tutoresService.update(id, tutoresDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma tutor", description = "Deleta uma determinada tutor passando o seu ID")
     public ResponseEntity<Void> deletetutores(@PathVariable("id") UUID id){
         tutoresService.delete(tutoresService.findById(id));

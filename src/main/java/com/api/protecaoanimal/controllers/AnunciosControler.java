@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class AnunciosControler {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Cadastrar um novo anuncio", description = "Cadastrar um novo anuncio" )
     public ResponseEntity<AnunciosModel> saveanuncios(@RequestBody @Valid AnunciosDto anunciosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.save(anunciosDto));
@@ -57,12 +59,14 @@ public class AnunciosControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar anuncio", description = "Atualiza um determinado anuncio passando o seu ID e as configurações que deseja")
     public ResponseEntity<AnunciosModel> updateanuncios(@PathVariable("id") UUID id, @RequestBody @Valid AnunciosDto anunciosDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(anunciosService.update(id,anunciosDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma anuncio", description = "Deleta uma determinada anuncio passando o seu ID")
     public ResponseEntity<Void> deleteanuncios(@PathVariable("id") UUID id){
         anunciosService.delete(anunciosService.findById(id));

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class AdocoesControler {
     }
 
     @GetMapping
-    @Operation(summary = "Listar todas as ações", description = "Listar todas as ações")
+    @Operation(summary = "Listar todas as adoções", description = "Listar todas as adoções")
     public ResponseEntity<Page<AdocoesModel>> getListadocoes(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(adocoesService.findAll(pageable));
     }
@@ -57,12 +58,14 @@ public class AdocoesControler {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Atualizar adoção", description = "Atualiza uma determinada adoção passando o seu ID e as configurações que deseja")
     public ResponseEntity<AdocoesModel> updateadocoes(@PathVariable("id") UUID id, @RequestBody @Valid AdocoesDto adocoesDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(adocoesService.update(id, adocoesDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Deleta uma adoção", description = "Deleta uma determinada adoção passando o seu ID")
     public ResponseEntity<Void> deleteadocoes(@PathVariable("id") UUID id){
         adocoesService.delete(adocoesService.findById(id));
