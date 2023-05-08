@@ -9,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @Tag(name = "Usuários")
 @RequestMapping("/usuarios")
+
 public class UsuariosControler {
 
     final UsuariosService usuariosService;
@@ -46,6 +48,7 @@ public class UsuariosControler {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('USER')")
     @Operation(summary = "Listar todos os usuarios", description = "Listar todos os usuarios")
     public ResponseEntity<Page<UsuariosModel>> buscarTodosUsuarios(@PageableDefault(page = 0, size = 10, sort = "registro", direction = Sort.Direction.ASC) Pageable pageable){
         return ResponseEntity.status(HttpStatus.OK).body(usuariosService.findAll(pageable));

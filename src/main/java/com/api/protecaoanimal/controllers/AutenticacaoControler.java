@@ -1,5 +1,7 @@
 package com.api.protecaoanimal.controllers;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,11 @@ public class AutenticacaoControler {
     @GetMapping("/logout")
     public String logout() {
         return "logout";
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<Authentication> getLoggedInUser(Authentication authentication) {
+        return ResponseEntity.ok(authentication);
     }
 
 

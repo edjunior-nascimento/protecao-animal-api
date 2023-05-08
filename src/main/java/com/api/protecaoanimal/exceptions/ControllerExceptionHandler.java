@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
@@ -18,7 +19,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
         MessageStatus message = new MessageStatus(
             new Date(),
             HttpStatus.NOT_FOUND.value(),
-            HttpStatus.NOT_FOUND.getReasonPhrase(),
+            StatusEnum.NOT_FOUND.getStatus(),
             it.getMessage().isEmpty()?StatusEnum.NOT_FOUND.getStatus():it.getMessage()
              );
 
@@ -30,10 +31,21 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
         MessageStatus message = new MessageStatus(
             new Date(),
             HttpStatus.CONFLICT.value(),
-            HttpStatus.CONFLICT.getReasonPhrase(),
+            StatusEnum.CONFLICT.getStatus(),
             it.getMessage().isEmpty()?StatusEnum.CONFLICT.getStatus():it.getMessage()
              );
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<MessageStatus> acessoNegadoException(AccessDeniedException it) {
+        MessageStatus message = new MessageStatus(
+            new Date(),
+            HttpStatus.FORBIDDEN.value(),
+            StatusEnum.FORBIDDEN.getStatus(),
+            "Você não tem permissão para acessar este recurso"
+             );
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
     }
     
 }
